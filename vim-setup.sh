@@ -7,40 +7,26 @@
 # Author: Santiago Pagola
 
 # First find out which distro is being used
-function which_distro
-{
-    local DISTRO=$(cat /etc/issue | cut -d" " -f1)
-    case ${DISTRO,,} in
-	ubuntu)
-	    return 0
-	    ;;
-	arch)
-	    return 1
-	    ;;
-	*)
-	    return 2
-	    ;;
-    esac
-}
 
-which_distro
-case $? in
-    0)
+DISTRO=$(cat /etc/issue | cut -d" " -f1)
+case ${DISTRO,,} in
+    ubuntu)
 	DISTRO=ubuntu
 	PM=apt-get
 	PMARGS=install -y
 	;;
-    1)
-	DISTRO=arch
+    arch)
+        DISTRO=arch
 	PM=pacman
 	PMARGS=-S
 	;;
-    2)
-	DISTRO=other
+    *)
+        DISTRO=other
 	PM=yum
 	PMARGS=install
 	;;
 esac
+
 echo "Current distro: $DISTRO"
 
 
