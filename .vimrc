@@ -33,8 +33,11 @@ nnoremap e $
 " Highlight last inserted text
 nnoremap gV `[v`]
 
-" For the very lazy ass: mini-prototype of main()
+" For the very lazy ass: mini-prototype of main() and classic includes
 inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr><bs>return 0;<cr>}<cr><esc>3ki<tab>
+inoremap inc #include <stdio.h>
+inoremap hej #include <stdio.h><cr><cr>int main(int argc, char* argv[])<cr>{<cr><bs>printf("Hello world!\n");<cr>return 0;<cr>}
+
 
 inoremap jk <esc>
 inoremap jj ()<esc>i
