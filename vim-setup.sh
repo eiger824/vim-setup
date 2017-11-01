@@ -9,37 +9,37 @@
 # First find out which distro is being used
 function which_distro
 {
-		local DISTRO=$(cat /etc/issue | cut -d" " -f1)
-		case ${DISTRO,,} in
-				ubuntu)
-						return 0
-						;;
-				arch)
-						return 1
-						;;
-				*)
-						return 2
-						;;
-		esac
+    local DISTRO=$(cat /etc/issue | cut -d" " -f1)
+    case ${DISTRO,,} in
+	ubuntu)
+	    return 0
+	    ;;
+	arch)
+	    return 1
+	    ;;
+	*)
+	    return 2
+	    ;;
+    esac
 }
 
 which_distro
 case $? in
-		0)
-				DISTRO=ubuntu
-				PM=apt-get
-				PMARGS=install -y
-				;;
-		1)
-				DISTRO=arch
-				PM=pacman
-				PMARGS=-S
-				;;
-		2)
-				DISTRO=other
-				PM=yum
-				PMARGS=install
-				;;
+    0)
+	DISTRO=ubuntu
+	PM=apt-get
+	PMARGS=install -y
+	;;
+    1)
+	DISTRO=arch
+	PM=pacman
+	PMARGS=-S
+	;;
+    2)
+	DISTRO=other
+	PM=yum
+	PMARGS=install
+	;;
 esac
 echo "Current distro: $DISTRO"
 
@@ -47,10 +47,10 @@ echo "Current distro: $DISTRO"
 # Find out if vim installed. Usually, vim should be in /usr/bin/vim
 if [[ -f /usr/bin/vim ]]
 then
-	echo "Vim found, skipping download..."
+    echo "Vim found, skipping download..."
 else
-	echo "Going to install vim!"
-	`sudo $PM $PMARGS vim`
+    echo "Going to install vim!"
+    `sudo $PM $PMARGS vim`
 fi
 
 # Next, copy our favorite .vimrc. Don't just override if existing .vimrc
@@ -58,10 +58,10 @@ fi
 echo "Looking for existent .vimrc in $HOME"
 if [[ -f $HOME/.vimrc ]]
 then
-	echo "Found, backing up"
-	mv $HOME/.vimrc $HOME/.vimrc.bkup
+    echo "Found, backing up"
+    mv $HOME/.vimrc $HOME/.vimrc.bkup
 else
-	echo "Not found, creating new"
+    echo "Not found, creating new"
 fi
 
 cat << EOF > $HOME/.vimrc
