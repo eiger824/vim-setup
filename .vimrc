@@ -33,27 +33,50 @@ nnoremap e $
 " Highlight last inserted text
 nnoremap gV `[v`]
 
+nnoremap DD :1,$d<cr>
+
 " For the very lazy ass: mini-prototype of main() and classic includes
 inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr><bs>return 0;<cr>}<cr><esc>3ki<tab>
-inoremap inc #include <stdio.h>
+inoremap iB #include <stdio.h>
 inoremap hej #include <stdio.h><cr><cr>int main(int argc, char* argv[])<cr>{<cr><bs>printf("Hello world!\n");<cr>return 0;<cr>}
 
-
+" Escape mapping - super useful!
 inoremap jk <esc>
+
+" Parentheses
 inoremap jj ()<esc>i
-inoremap hh []<esc>i
-inoremap lL {};<esc>hi
 inoremap jJ ();<esc>hi
+inoremap ( ()<esc>i
+
+" Square brackets
+inoremap hh []<esc>i
+inoremap hH [];<esc>hi
+inoremap [ []<esc>i
+
+" Curly braces
+inoremap kj {}<esc>i
+inoremap kJ {};<esc>hi
+inoremap { {}<esc>i
+
+" Add context in newline
 inoremap kk <esc>A<cr>{<cr><cr>}<esc>ki<tab>
+
+" Quotation marks
 inoremap cc ""<esc>i
 inoremap '' ''<esc>i
+
+" close < and >
 inoremap <z <><esc>i
+
 inoremap nn \n
 inoremap tt \t
 
-" The very best: ee will move the cursor to the end
+" Some language-related tricks: C++
+inoremap cout cout <<   << endl;<esc>9hi
+
+" The very best: eE will move the cursor to the end
 " iif both previous and next chars are non-space
-inoremap eE <esc>A
+inoremap <leader><leader> <esc>A
 
 nnoremap s :w<cr>
 nnoremap se :wq<cr>
