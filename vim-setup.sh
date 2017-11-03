@@ -64,7 +64,11 @@ fi
 echo "Copying plugins"
 if [[ ! -d $HOME/.vim/plugin ]]
 then
-		mkdir $HOME/.vim/plugin
+		mkdir -p $HOME/.vim/plugin
 fi
 
 cp plugin/* $HOME/.vim/plugin/
+
+# YouCompleteMe source script
+echo "Copying YCM source script"
+cp .ycm_extra_conf.py $HOME/.vim

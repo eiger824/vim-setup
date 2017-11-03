@@ -75,6 +75,7 @@ inoremap tt \t
 
 " Some language-related tricks: C++
 inoremap cout cout <<   << endl;<esc>9hi
+inoremap cerr cerr <<   << endl;<esc>9hi
 
 " The very best: eE will move the cursor to the end
 " iif both previous and next chars are non-space
@@ -91,6 +92,7 @@ nnoremap QQ :q!<cr>
 nnoremap ind mzgg=G`z
 
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+nnoremap <leader>a <esc>ggvG
 
 
 execute pathogen#infect()
