@@ -67,4 +67,4 @@ then
 		mkdir $HOME/.vim/plugin
 fi
 
-cp plugins/* $HOME/.vim/plugin/
+cp plugin/* $HOME/.vim/plugin/
