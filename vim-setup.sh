@@ -53,9 +53,18 @@ fi
 test -h $HOME/.vimrc || ln -s $PWD/.vimrc $HOME/.vimrc
 
 # Check that the file was successfully created
-test -h $HOME/.vimrc && echo "Success!" && exit 0
-
-echo "Something went wrong..."
+if [[ -h $HOME/.vimrc ]]
+then
+		echo "Success"
+else
+	echo "Something went wrong..."
+fi
 
 # Next: plugins
+echo "Copying plugins"
+if [[ ! -d $HOME/.vim/plugin ]]
+then
+		mkdir $HOME/.vim/plugin
+fi
 
+cp plugins/* $HOME/.vim/plugin/
