@@ -67,6 +67,8 @@ inoremap '' ''<esc>i
 
 " close < and >
 inoremap <z <><esc>i
+inoremap < <><esc>i
+
 
 inoremap nn \n
 inoremap tt \t
@@ -78,11 +80,18 @@ inoremap cout cout <<   << endl;<esc>9hi
 " iif both previous and next chars are non-space
 inoremap <leader><leader> <esc>A
 
+" File-Switch (FS) mappings
+nnoremap <F5> :FSHere<cr>
+nnoremap <C-o> :edit 
+
 nnoremap s :w<cr>
 nnoremap se :wq<cr>
 nnoremap qq :q<cr>
 nnoremap QQ :q!<cr>
 nnoremap ind mzgg=G`z
+
+nnoremap <leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+
 
 execute pathogen#infect()
 
@@ -92,18 +101,23 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
 if (empty($TMUX))
-  if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
+if (has("nvim"))
+"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+set termguicolors
+endif
 endif
 
 "Apply onedark coloring
 colorscheme onedark 
 syntax on
+
+" Call feedkeys to set highlight mode on
+call feedkeys("h\<space>")
+
+nnoremap <leader><leader> :call GetTranslationUnit()<cr>
