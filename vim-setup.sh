@@ -6,6 +6,12 @@
 # 
 # Author: Santiago Pagola
 
+if [[ `basename $(pwd)` != "vim-setup" ]]
+then
+	echo "Run this script from root directory"
+	exit 1
+fi
+
 # First find out which distro is being used
 
 DISTRO=$(cat /etc/issue | cut -d" " -f1)
@@ -13,7 +19,7 @@ case ${DISTRO,,} in
     ubuntu)
 	DISTRO=ubuntu
 	PM=apt-get
-	PMARGS=install -y
+	PMARGS="install -y"
 	;;
     arch)
         DISTRO=arch

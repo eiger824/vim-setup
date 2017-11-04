@@ -47,31 +47,41 @@ inoremap jk <esc>
 inoremap jj ()<esc>i
 inoremap jJ ();<esc>hi
 inoremap ( ()<esc>i
+inoremap () ()<esc>i
 
 " Square brackets
 inoremap hh []<esc>i
 inoremap hH [];<esc>hi
 inoremap [ []<esc>i
+inoremap [] []<esc>i
 
 " Curly braces
 inoremap kj {}<esc>i
 inoremap kJ {};<esc>hi
 inoremap { {}<esc>i
+inoremap {} {}<esc>i
+
+" Backtick
+inoremap ` ``<esc>i
+inoremap `` ``<esc>i
 
 " Add context in newline
 inoremap kk <esc>A<cr>{<cr><cr>}<esc>ki<tab>
 
 " Quotation marks
+inoremap " ""<esc>i
+inoremap "" ""<esc>i
 inoremap cc ""<esc>i
 inoremap '' ''<esc>i
 
 " close < and >
 inoremap <z <><esc>i
 inoremap < <><esc>i
+inoremap <> <><esc>i
 
 
-inoremap nn \n
-inoremap tt \t
+inoremap nN \n
+inoremap tT \t
 
 " Some language-related tricks: C++
 inoremap cout cout <<   << endl;<esc>9hi
@@ -122,4 +132,13 @@ syntax on
 " Call feedkeys to set highlight mode on
 call feedkeys("h\<space>")
 
-nnoremap <leader><leader> :call GetTranslationUnit()<cr>
+"nnoremap <leader><leader> :call GetTranslationUnit()<cr>
+nnoremap <F6> :call GetTranslationUnit()<cr>
+
+" Comments: add new block comment
+inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
+" Comment current line
+nnoremap <leader>c :%s/\<<C-r><C-w>\>/\/\/\<<C-r><C-w>\>>>>/gc<Left><Left><Left>
+
+" Turn on/off line mode
+nnoremap <leader>N :setlocal number!<cr>
