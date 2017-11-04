@@ -35,7 +35,6 @@ function! GetTranslationUnit()
     else
       echo 'Found: ' . paths
 	  "execute "edit ". paths
-	  echo 'About to open: ' . paths
 	  execute "rightbelow vsplit " . paths
     endif
   endif
