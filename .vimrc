@@ -139,7 +139,9 @@ nnoremap <F6> :call GetTranslationUnit()<cr>
 inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
 " Comment current line
 inoremap <leader>c <esc>0i//
-inoremap <leader>u <esc>0xxi
+nnoremap <leader>c 0i//<esc>
+inoremap <leader>u <esc>02xi
+nnoremap <leader>u 02xi<esc>
 
 " Turn on/off line mode
 nnoremap <leader>N :setlocal number!<cr>
