@@ -138,7 +138,8 @@ nnoremap <F6> :call GetTranslationUnit()<cr>
 " Comments: add new block comment
 inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
 " Comment current line
-nnoremap <leader>c :%s/\<<C-r><C-w>\>/\/\/\<<C-r><C-w>\>>>>/gc<Left><Left><Left>
+inoremap <leader>c <esc>0i//
+inoremap <leader>u <esc>0xxi
 
 " Turn on/off line mode
 nnoremap <leader>N :setlocal number!<cr>
