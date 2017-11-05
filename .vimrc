@@ -137,6 +137,8 @@ nnoremap <F6> :call GetTranslationUnit()<cr>
 
 " Comments: add new block comment
 inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
+inoremap <C-C> <esc>:call BlockCommentInteractive()<cr>i
+nnoremap <C-C> :call BlockCommentInteractive()<cr>
 " Comment current line
 inoremap <leader>c <esc>0i//
 nnoremap <leader>c 0i//<esc>
