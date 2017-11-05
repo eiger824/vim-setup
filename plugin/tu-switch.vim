@@ -21,20 +21,17 @@ function! GetTranslationUnit()
   " Start the file seach from the top .git parent-directory,
   " assumming the directory hierarchy is version-controlled
   let rootDir2 = finddir(".git", ".;")
-  let rootDir1 = fnamemodify(rootDir2, ':p')
-  let rootDir_split = split(rootDir1, '/')
-  let rootDir_tmp = join(rootDir_split[:-2], '/')
-  let rootDir_cmp = '/' . rootDir_tmp
-  let rootDir = fnameescape(rootDir_cmp)
+  let rootDir1 = fnamemodify(rootDir2, ':p:h')
+  let rootDir = fnameescape(rootDir1)
 
   if empty(rootDir)
 	echo 'WARNING: No .git directories were found, skipping search'
   else
 	if sys_parts[0] == include_line
-      echo 'RootDir: ' . rootDir
+      echo 'Will search in : ' . rootDir
 	  let paths = system("find " . rootDir . " -name " . simpleHeaderName)
 	else
-	  echo 'RootDir: ' . searchDir 
+	  echo 'Will search in: ' . searchDir
 	  let paths = system("find " . searchDir . " -name " . simpleHeaderName)
 	endif
 	if empty(paths)
