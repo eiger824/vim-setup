@@ -12,6 +12,7 @@ function! GetTranslationUnit()
 	  let headerName = split(loc_parts[1], '"')[0]
   else
 	  let headerName = split(sys_parts[1], '>')[0]
+	  let searchDir = '/usr/include'
   endif
 	
   " Last check: if relative paths are found
@@ -25,12 +26,17 @@ function! GetTranslationUnit()
   let rootDir_tmp = join(rootDir_split[:-2], '/')
   let rootDir_cmp = '/' . rootDir_tmp
   let rootDir = fnameescape(rootDir_cmp)
-  echo 'RootDir: ' . rootDir
 
   if empty(rootDir)
 	echo 'WARNING: No .git directories were found, skipping search'
   else
-	let paths = system("find " . rootDir . " -name " . simpleHeaderName)
+	if sys_parts[0] == include_line
+      echo 'RootDir: ' . rootDir
+	  let paths = system("find " . rootDir . " -name " . simpleHeaderName)
+	else
+	  echo 'RootDir: ' . searchDir 
+	  let paths = system("find " . searchDir . " -name " . simpleHeaderName)
+	endif
 	if empty(paths)
 	  echo 'WARNING: File not found (' . headerName . ')'
     else
