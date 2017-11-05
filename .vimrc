@@ -139,6 +139,9 @@ nnoremap <F6> :call GetTranslationUnit()<cr>
 inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
 inoremap <C-C> <esc>:call BlockCommentInteractive()<cr>i
 nnoremap <C-C> :call BlockCommentInteractive()<cr>
+inoremap <C-U> <esc>:call BlockUncomment()<cr>i
+nnoremap <C-U> :call BlockUncomment()<cr>
+
 " Comment current line
 inoremap <leader>c <esc>0i//
 nnoremap <leader>c 0i//<esc>
