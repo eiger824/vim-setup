@@ -1,5 +1,6 @@
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 "set expandtab
 
 set showcmd
@@ -27,6 +28,9 @@ set foldmethod=indent
 
 "nnoremap A ^
 nnoremap E $
+" Append at end
+inoremap <leader>E <esc>GA
+nnoremap <leader>E <esc>GA
 "nnoremap a ^
 nnoremap e $
 
@@ -93,13 +97,13 @@ inoremap <leader><leader> <esc>A
 
 " File-Switch (FS) mappings
 nnoremap <F5> :FSHere<cr>
-nnoremap <C-o> :edit 
+nnoremap <C-o> :edit
 
 nnoremap s :w<cr>
 nnoremap se :wq<cr>
 nnoremap qq :q<cr>
 nnoremap QQ :q!<cr>
-nnoremap ind mzgg=G`z
+nnoremap <leader>5 mzgg=G`z
 
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 nnoremap <leader>a <esc>ggvG
@@ -126,17 +130,15 @@ endif
 endif
 
 "Apply onedark coloring
-colorscheme onedark 
+colorscheme onedark
 syntax on
 
-" Call feedkeys to set highlight mode on
-call feedkeys("h\<space>")
-
 "nnoremap <leader><leader> :call GetTranslationUnit()<cr>
-nnoremap <F6> :call GetTranslationUnit()<cr>
+nnoremap <F6> :call GetTranslationUnit(0)<cr>
+nnoremap <F7> :call GetTranslationUnit(1)<cr>
 
 " Comments: add new block comment
-inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
+inoremap <C-A> /*<cr><cr>/<cr><esc>kkA
 inoremap <C-C> <esc>:call BlockCommentInteractive()<cr>i
 nnoremap <C-C> :call BlockCommentInteractive()<cr>
 inoremap <C-U> <esc>:call BlockUncomment()<cr>i
@@ -150,3 +152,5 @@ nnoremap <leader>u 02xi<esc>
 
 " Turn on/off line mode
 nnoremap <leader>N :setlocal number!<cr>
+" Remove trailing whitespaces
+nnoremap <leader>w :call RemoveTrailingWhitespaces()<cr>
