@@ -133,7 +133,6 @@ endif
 colorscheme onedark
 syntax on
 
-"nnoremap <leader><leader> :call GetTranslationUnit()<cr>
 nnoremap <F6> :call GetTranslationUnit(0)<cr>
 nnoremap <F7> :call GetTranslationUnit(1)<cr>
 
@@ -145,10 +144,8 @@ inoremap <C-U> <esc>:call BlockUncomment()<cr>i
 nnoremap <C-U> :call BlockUncomment()<cr>
 
 " Comment current line
-inoremap <leader>c <esc>0i//
-nnoremap <leader>c 0i//<esc>
-inoremap <leader>u <esc>02xi
-nnoremap <leader>u 02xi<esc>
+inoremap <leader>c <esc>:call ToggleLineComment()<cr>A
+nnoremap <leader>c :call ToggleLineComment()<cr>
 
 " Turn on/off line mode
 nnoremap <leader>N :setlocal number!<cr>
