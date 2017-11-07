@@ -103,3 +103,19 @@ then
 fi
 echo Copying autoload/onedark.vim
 cp onedark.vim/autoload/onedark.vim $HOME/.vim/autoload
+
+# FSwitch plugin
+if [[ ! -d "$(pwd)/vim-fswitch" ]]
+then
+	echo FSwitch is missing, cloning ...
+	git clone https://github.com/derekwyatt/vim-fswitch.git
+fi
+if [[ ! -d "$HOME/.vim/doc" ]]
+then
+	echo "Creating $HOME/.vim/doc directory"
+	mkdir $HOME/.vim/doc
+fi
+echo "Copying vim-fswitch/doc/fswitch.txt"
+cp vim-fswitch/doc/fswitch.txt $HOME/.vim/doc
+echo "Copying vim-fswitch/plugin/fswitch.vim"
+cp vim-fswitch/plugin/fswitch.vim $HOME/.vim/plugin
