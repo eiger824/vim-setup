@@ -2,8 +2,14 @@
 " at common locations
 " Author: Santiago Pagola
 
-function GetRootDir(dir)
-	let dirSplit = split(a:dir, '/')
+function GetRootDir()
+	" Start the file seach from the top .git parent-directory,
+	" assumming the directory hierarchy is version-controlled
+	let rootDir2 = finddir(".git", ".;")
+	let rootDir1 = fnamemodify(rootDir2, ':p:h')
+	let rootDir_esc = fnameescape(rootDir1)
+
+	let dirSplit = split(rootDir_esc, '/')
 	" If for some reason the last element is .git, remove it
 	if dirSplit[-1] == ".git"
 		" Get rid of last element
@@ -11,7 +17,7 @@ function GetRootDir(dir)
 		return "/" . join(fullPath, '/')
 	else
 		" Then simply return the input directory
-		return a:dir
+		return rootDir_esc
 	endif
 endfunction
 
@@ -30,14 +36,8 @@ function! GetTranslationUnit(place)
 
 	" Last check: if relative paths are found
 	let simpleHeaderName = split(headerName, '/')[-1]
-
-	" Start the file seach from the top .git parent-directory,
-	" assumming the directory hierarchy is version-controlled
-	let rootDir2 = finddir(".git", ".;")
-	let rootDir1 = fnamemodify(rootDir2, ':p:h')
-	let rootDir_esc = fnameescape(rootDir1)
-
-	let rootDir = GetRootDir(rootDir_esc)
+	
+	let rootDir = GetRootDir()
 
 	if empty(rootDir)
 		echo 'WARNING: No .git directories were found, skipping search'

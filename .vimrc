@@ -137,7 +137,7 @@ nnoremap <F6> :call GetTranslationUnit(0)<cr>
 nnoremap <F7> :call GetTranslationUnit(1)<cr>
 
 " Comments: add new block comment
-inoremap <C-A> /*<cr><cr>/<cr><esc>kkA
+inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
 inoremap <C-C> <esc>:call BlockCommentInteractive()<cr>i
 nnoremap <C-C> :call BlockCommentInteractive()<cr>
 inoremap <C-U> <esc>:call BlockUncomment()<cr>i
@@ -146,8 +146,16 @@ nnoremap <C-U> :call BlockUncomment()<cr>
 " Comment current line
 inoremap <leader>c <esc>:call ToggleLineComment()<cr>A
 nnoremap <leader>c :call ToggleLineComment()<cr>
+inoremap <leader>C <esc>:call ToggleBlockLineComment()<cr>A
+nnoremap <leader>C :call ToggleBlockLineComment()<cr>
 
 " Turn on/off line mode
 nnoremap <leader>N :setlocal number!<cr>
 " Remove trailing whitespaces
 nnoremap <leader>w :call RemoveTrailingWhitespaces()<cr>
+
+
+" Explore word under cursor
+nnoremap <leader>f :call ExploreSymbolUnderCursor()<cr>
+
+nnoremap <space> :b#<cr>
