@@ -57,8 +57,13 @@ fi
 echo "Looking for existent .vimrc in $HOME"
 if [[ -f $HOME/.vimrc ]]
 then
-	echo "Found, backing up"
-	mv $HOME/.vimrc $HOME/.vimrc.bkup
+	# Last check: if it's NOT a symlink (before this script
+	# came to life), just make a hard copy, not a symlink
+	if [[ ! -h $HOME/.vimrc ]]
+	then
+		echo "Found, backing up"
+		mv $HOME/.vimrc $HOME/.vimrc.old
+	fi
 else
 	echo "Not found, creating new"
 fi
