@@ -20,11 +20,18 @@ case ${DISTRO,,} in
 		DISTRO=ubuntu
 		PM=apt-get
 		PMARGS="install -y"
+		CLANG="libclang-dev"
+		PY="python-dev python3-dev"
+		BUILD_ESSENTIAL="build-essential"
 		;;
 	arch)
 		DISTRO=arch
 		PM=pacman
 		PMARGS=-S
+		CLANG="clang"
+		PY="python"
+		# Already included in the base package
+		BUILD_ESSENTIAL=""
 		;;
 	*)
 		DISTRO=other
@@ -78,11 +85,12 @@ do
 	cp $plugin $HOME/.vim/plugin/
 done
 
-# YouCompleteMe source script
-echo "Copying YCM source script"
-cp .ycm_extra_conf.py $HOME/.vim
 
-# Onedark theme
+###########################################################
+####################### 3rd party stuff ###################
+###########################################################
+
+###################### Onedark theme ######################
 if [[ ! -d "$(pwd)/onedark.vim" ]]
 then
 	echo Onedark is missing, cloning ...
@@ -103,8 +111,9 @@ then
 fi
 echo Copying autoload/onedark.vim
 cp onedark.vim/autoload/onedark.vim $HOME/.vim/autoload
+#############################################################
 
-# FSwitch plugin
+######################## FSwitch plugin #####################
 if [[ ! -d "$(pwd)/vim-fswitch" ]]
 then
 	echo FSwitch is missing, cloning ...
@@ -119,3 +128,33 @@ echo "Copying vim-fswitch/doc/fswitch.txt"
 cp vim-fswitch/doc/fswitch.txt $HOME/.vim/doc
 echo "Copying vim-fswitch/plugin/fswitch.vim"
 cp vim-fswitch/plugin/fswitch.vim $HOME/.vim/plugin
+#############################################################
+
+
+###################### YouCompleteMe ########################
+if [[ ! -d "$HOME/.vim/bundle" ]]
+then
+	echo "Creating $HOME/.vim/bundle directory"
+	mkdir $HOME/.vim/bundle
+fi
+# Clone the project directly in there
+if [[ ! -d "$HOME/.vim/bundle/YouCompleteMe" ]]
+then
+	echo "YouCompleteMe is missing, cloning ..."
+	mkdir $HOME/.vim/bundle/YouCompleteMe
+	git clone https://github.com/Valloric/YouCompleteMe.git $HOME/.vim/bundle/YouCompleteMe
+	echo "Installing necessary headers"
+	`sudo $PM $PMARGS $BUILD_ESSENTIAL cmake $PY $CLANG`
+	# Change directory there
+	cd $HOME/.vim/bundle/YouCompleteMe
+	echo -e "\t[YCM] Initializing project ..."
+	git submodule update --init --recursive
+	echo -e "\t[YCM] Building project ..."
+	./install.py --clang-completer --system-libclang
+	cd - &> /dev/null
+
+	# YouCompleteMe source script
+	echo "Copying YCM source script"
+	cp .ycm_extra_conf.py $HOME/.vim
+fi
+#############################################################
