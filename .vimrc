@@ -160,4 +160,4 @@ nnoremap <leader>f :call ExploreSymbolUnderCursor()<cr>
 
 nnoremap <space> :b#<cr>
 
-nnoremap <leader>d :call Documentify()<cr>
+nnoremap <leader>d :call Documentify()<cr>dd
