@@ -81,3 +81,25 @@ done
 # YouCompleteMe source script
 echo "Copying YCM source script"
 cp .ycm_extra_conf.py $HOME/.vim
+
+# Onedark theme
+if [[ ! -d "$(pwd)/onedark.vim" ]]
+then
+	echo Onedark is missing, cloning ...
+	git clone https://github.com/joshdick/onedark.vim.git
+fi
+if [[ ! -d "$HOME/.vim/colors" ]]
+then
+	echo "Creating $HOME/.vim/colors directory"
+	mkdir $HOME/.vim/colors
+fi
+echo Copying colors/onedark.vim
+cp onedark.vim/colors/onedark.vim $HOME/.vim/colors
+
+if [[ ! -d "$HOME/.vim/autoload" ]]
+then
+	echo "Creating $HOME/.vim/autoload directory"
+	mkdir $HOME/.vim/autoload
+fi
+echo Copying autoload/onedark.vim
+cp onedark.vim/autoload/onedark.vim $HOME/.vim/autoload

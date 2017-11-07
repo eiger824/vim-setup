@@ -154,10 +154,14 @@ nnoremap <leader>N :setlocal number!<cr>
 " Remove trailing whitespaces
 nnoremap <leader>w :call RemoveTrailingWhitespaces()<cr>
 
-
 " Explore word under cursor
 nnoremap <leader>f :call ExploreSymbolUnderCursor()<cr>
+nnoremap <leader>d :call Documentify()<cr>dd
 
+" Switch to previous buffer
 nnoremap <space> :b#<cr>
 
-nnoremap <leader>d :call Documentify()<cr>dd
+" Makefile variables
+inoremap <leader>b ${}<esc>i
+" New bash command
+inoremap <leader>n $()<esc>i
