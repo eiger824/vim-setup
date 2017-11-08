@@ -17,22 +17,25 @@ function GetDistro
 	# Return 0 for debian
 	# Return 1 for arch
 	# Return 100 for fedora
-	TYPE=$1
+	TYPE=$@
 	echo $TYPE | grep -qi ubuntu
 	if [ $? -eq 0 ]
 	then
+		FLAVOR="ubuntu"
 		return 0
 	fi
 
 	echo $TYPE | grep -iq mint
 	if [ $? -eq 0 ]
 	then
+		FLAVOR="mint"
 		return 0
 	fi
 
 	echo $TYPE | grep -iq arch
 	if [ $? -eq 0 ]
 	then
+		FLAVOR="arch"
 		return 1
 	fi
 
@@ -70,7 +73,7 @@ case $DISTRO in
 		;;
 esac
 
-echo "Current distro: $DISTRO"
+echo "Current distro: $DISTRO($FLAVOR)"
 
 
 # Find out if vim installed. Usually, vim should be in /usr/bin/vim
