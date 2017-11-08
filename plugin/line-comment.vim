@@ -13,8 +13,10 @@ function! GetFileExtension()
 		return "// "
 	elseif format == "sh" || format == "bash"
 		return "#  "
-	elseif format == "vim"
+	elseif format == "vim" || format == "vimrc"
 		return '"  '
+	elseif format == "bashrc" || format == "bash_aliases"
+		return "#  "
 	endif
 endfunction
 
