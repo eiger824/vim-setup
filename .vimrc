@@ -108,8 +108,7 @@ nnoremap <leader>5 mzgg=G`z
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 nnoremap <leader>a <esc>ggvG
 
-
-"execute pathogen#infect()
+execute pathogen#infect()
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 

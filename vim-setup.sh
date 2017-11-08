@@ -151,6 +151,18 @@ then
 fi
 #############################################################
 
+########################### Pathogen ########################
+if [[ ! -d "$(pwd)/vim-pathogen" ]]
+then
+	echo "Pathogen is missing, cloning ..."
+	git clone https://github.com/tpope/vim-pathogen.git
+fi
+if [[ ! -h $HOME/.vim/autoload/pathogen.vim ]]
+then
+	echo "Symlinking vim-pathogen/autoload/pathogen.vim"
+	ln -s $(pwd)/vim-pathogen/autoload/pathogen.vim $HOME/.vim/autoload/pathogen.vim
+fi
+#############################################################
 
 ###################### YouCompleteMe ########################
 if [[ ! -d "$HOME/.vim/bundle" ]]
