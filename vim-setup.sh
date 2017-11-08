@@ -3,7 +3,7 @@
 #
 # The following script will configure Vim and tweak it to use
 # custom keyboard mappings for a better experience
-# 
+#
 # Author: Santiago Pagola
 
 if [[ `basename $(pwd)` != "vim-setup" ]]
@@ -12,19 +12,49 @@ then
 	exit 1
 fi
 
-# First find out which distro is being used
+function GetDistro
+{
+	# Return 0 for debian
+	# Return 1 for arch
+	# Return 100 for fedora
+	TYPE=$1
+	echo $TYPE | grep -qi ubuntu
+	if [ $? -eq 0 ]
+	then
+		return 0
+	fi
 
-DISTRO=$(cat /etc/issue | cut -d" " -f1)
-case ${DISTRO,,} in
-	ubuntu)
-		DISTRO=ubuntu
+	echo $TYPE | grep -iq mint
+	if [ $? -eq 0 ]
+	then
+		return 0
+	fi
+
+	echo $TYPE | grep -iq arch
+	if [ $? -eq 0 ]
+	then
+		return 1
+	fi
+
+	# Otherwise return other
+	return 100
+}
+
+# First find out which distro is being used
+ISSUE=$(cat /etc/issue | cut -d" " -f1-2)
+ISSUE=$(eval echo ${ISSUE,,})
+GetDistro $ISSUE
+DISTRO=$?
+case $DISTRO in
+	0)
+		DISTRO=debian
 		PM=apt-get
 		PMARGS="install -y"
 		CLANG="libclang-dev"
 		PY="python-dev python3-dev"
 		BUILD_ESSENTIAL="build-essential"
 		;;
-	arch)
+	1)
 		DISTRO=arch
 		PM=pacman
 		PMARGS=-S
@@ -34,7 +64,7 @@ case ${DISTRO,,} in
 		BUILD_ESSENTIAL=""
 		;;
 	*)
-		DISTRO=other
+		DISTRO=fedora
 		PM=yum
 		PMARGS=install
 		;;
