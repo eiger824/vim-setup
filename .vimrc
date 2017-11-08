@@ -40,7 +40,7 @@ nnoremap gV `[v`]
 nnoremap DD :1,$d<cr>
 
 " For the very lazy ass: mini-prototype of main() and classic includes
-inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr><bs>return 0;<cr>}<cr><esc>3ki<tab>
+inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr>return 0;<cr>}<cr><esc>3ki<tab>
 inoremap iB #include <stdio.h>
 inoremap hej #include <stdio.h><cr><cr>int main(int argc, char* argv[])<cr>{<cr><bs>printf("Hello world!\n");<cr>return 0;<cr>}
 
