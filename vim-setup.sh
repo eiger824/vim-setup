@@ -86,8 +86,12 @@ fi
 
 for plugin in $(find plugin -type f)
 do
-	echo "Copying $(basename $plugin)"
-	cp $plugin $HOME/.vim/plugin/
+	# Symlink each plugin instead of copying
+	if [[ ! -h $HOME/.vim/$plugin ]]
+	then
+		echo "Symlinking $(basename $plugin)"
+		ln -s $(pwd)/$plugin $HOME/.vim/$plugin
+	fi
 done
 
 
@@ -106,16 +110,22 @@ then
 	echo "Creating $HOME/.vim/colors directory"
 	mkdir $HOME/.vim/colors
 fi
-echo Copying colors/onedark.vim
-cp onedark.vim/colors/onedark.vim $HOME/.vim/colors
+if [[ ! -h $HOME/.vim/colors/onedark.vim ]]
+then
+	echo "Symlinking colors/onedark.vim"
+	ln -s $(pwd)/onedark.vim/colors/onedark.vim $HOME/.vim/colors/onedark.vim
+fi
 
 if [[ ! -d "$HOME/.vim/autoload" ]]
 then
 	echo "Creating $HOME/.vim/autoload directory"
 	mkdir $HOME/.vim/autoload
 fi
-echo Copying autoload/onedark.vim
-cp onedark.vim/autoload/onedark.vim $HOME/.vim/autoload
+if [[ ! -h $HOME/.vim/autoload/onedark.vim ]]
+then
+	echo "Symlinking autoload/onedark.vim"
+	ln -s $(pwd)/onedark.vim/autoload/onedark.vim $HOME/.vim/autoload/onedark.vim
+fi
 #############################################################
 
 ######################## FSwitch plugin #####################
@@ -129,10 +139,16 @@ then
 	echo "Creating $HOME/.vim/doc directory"
 	mkdir $HOME/.vim/doc
 fi
-echo "Copying vim-fswitch/doc/fswitch.txt"
-cp vim-fswitch/doc/fswitch.txt $HOME/.vim/doc
-echo "Copying vim-fswitch/plugin/fswitch.vim"
-cp vim-fswitch/plugin/fswitch.vim $HOME/.vim/plugin
+if [[ ! -h $HOME/.vim/doc/fswitch.txt ]]
+then
+	echo "Symlinking vim-fswitch/doc/fswitch.txt"
+	ln -s $(pwd)/vim-fswitch/doc/fswitch.txt $HOME/.vim/doc/fswitch.txt
+fi
+if [[ ! -h $HOME/.vim/plugin/fswitch.vim ]]
+then
+	echo "Symlinking vim-fswitch/plugin/fswitch.vim"
+	ln -s $(pwd)/vim-fswitch/plugin/fswitch.vim $HOME/.vim/plugin/fswitch.vim
+fi
 #############################################################
 
 

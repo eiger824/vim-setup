@@ -45,7 +45,7 @@ inoremap iB #include <stdio.h>
 inoremap hej #include <stdio.h><cr><cr>int main(int argc, char* argv[])<cr>{<cr><bs>printf("Hello world!\n");<cr>return 0;<cr>}
 
 " Escape mapping - super useful!
-inoremap jk <esc>
+inoremap jk <esc>mzgg=G`z
 
 " Parentheses
 inoremap jj ()<esc>i
