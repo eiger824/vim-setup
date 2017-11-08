@@ -75,14 +75,12 @@ inoremap kk <esc>A<cr>{<cr><cr>}<esc>ki<tab>
 " Quotation marks
 inoremap " ""<esc>i
 inoremap "" ""<esc>i
-inoremap cc ""<esc>i
+inoremap cC ""<esc>i
 inoremap '' ''<esc>i
 
 " close < and >
 inoremap <z <><esc>i
-inoremap < <><esc>i
 inoremap <> <><esc>i
-
 
 inoremap nN \n
 inoremap tT \t
