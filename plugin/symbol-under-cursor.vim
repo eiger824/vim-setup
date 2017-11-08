@@ -4,6 +4,11 @@ function! ExploreSymbolUnderCursor()
 	let current_file = expand("%:p")
 	echo "Current file: " . current_file
 	let topDir = GetRootDir()
+	let homeDir = system("echo -n $HOME")
+	if topDir ==# homeDir
+		echo 'Searching in ' . homeDir . ', this may take forever. Skipping search'
+		return
+	endif
 
 	let matches = systemlist("grep -wnr " . current_word . " " . topDir . "/*")
 
