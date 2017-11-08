@@ -147,6 +147,7 @@ inoremap <leader>c <esc>:call ToggleLineComment()<cr>A
 nnoremap <leader>c :call ToggleLineComment()<cr>
 inoremap <leader>C <esc>:call ToggleBlockLineComment()<cr>A
 nnoremap <leader>C :call ToggleBlockLineComment()<cr>
+inoremap <leader>. /*  */<esc>2hi
 
 " Turn on/off line mode
 nnoremap <leader>N :setlocal number!<cr>
