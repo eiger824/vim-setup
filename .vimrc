@@ -164,3 +164,6 @@ nnoremap <space> :b#<cr>
 inoremap <leader>b ${}<esc>i
 " New bash command
 inoremap <leader>n $()<esc>i
+
+" Exec command
+nnoremap <leader>m :call CommandExec()<cr>
