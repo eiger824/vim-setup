@@ -1,3 +1,9 @@
+function! GetRelativePath(filename, topdir)
+	let split_filename = split(a:filename, '/')
+	let split_topdir = split(a:topdir, '/')
+	return join(split_filename[len(split_topdir):], '/')
+endfunction
+
 function! ExploreSymbolUnderCursor()
 	let current_word = expand("<cword>")
 	let current_line = line('.')
@@ -10,7 +16,7 @@ function! ExploreSymbolUnderCursor()
 		return
 	endif
 
-	let matches = systemlist("grep -wnr " . current_word . " " . topDir . "/*")
+	let matches = systemlist("grep -wnr " . current_word . " " . topDir . "/* | sed -e 's/\:\s\+/\:/g'")
 
 	let n = len(matches)
 
@@ -21,7 +27,8 @@ function! ExploreSymbolUnderCursor()
 		if file == current_file
 			echo 'Only match found in this file, skipping ...'
 		else
-			echo 'About to open file ' . file . ' at line ' . line
+			echo 'About to open file ' . GetRelativePath(file,topDir)
+						\ . ' at line ' . line
 			execute ":edit " . file
 		endif
 	else
@@ -32,12 +39,14 @@ function! ExploreSymbolUnderCursor()
 				let file = match_split[0]
 				let line = match_split[1]
 				let pattern = match_split[2]
-				echo string(i) . "\t" . '"' . pattern . '"' . " at file: " . file . " (line " . string(line) . ")"
+
+				echo string(i) . "\t" . '"' . pattern . '"' . " at file: "
+							\ . GetRelativePath(file,topDir) . " (line " . string(line) . ")"
 			endif
 			let i+= 1
 		endwhile
 		let opt = -1
-		while opt < 0 || opt >= n 
+		while opt < 0 || opt >= n
 			call inputsave()
 			let opt = input('Select option: ')
 			call inputrestore()
