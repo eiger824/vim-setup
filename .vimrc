@@ -47,6 +47,8 @@ inoremap hej #include <stdio.h><cr><cr>int main(int argc, char* argv[])<cr>{<cr>
 " Escape mapping - super useful!
 inoremap jk <esc>mzgg=G`z
 
+" Escape next closing )]}
+inoremap <space><space> <esc>2li
 " Parentheses
 inoremap jj ()<esc>i
 inoremap jJ ();<esc>hi
@@ -166,4 +168,4 @@ inoremap <leader>b ${}<esc>i
 inoremap <leader>n $()<esc>i
 
 " Exec command
-nnoremap <leader>m :call CommandExec()<cr>
+nnoremap <leader>m :w<cr>:call CommandExec()<cr>
