@@ -44,11 +44,13 @@ inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr>return 0;<cr>}<cr><esc>
 inoremap iB #include <stdio.h>
 inoremap hej #include <stdio.h><cr><cr>int main(int argc, char* argv[])<cr>{<cr><bs>printf("Hello world!\n");<cr>return 0;<cr>}
 
+" Indent current line
+nnoremap z =$;
 " Escape mapping - super useful!
 inoremap jk <esc>=$g;
 
 " Escape next closing )]}
-inoremap <space><space> <esc>2li
+inoremap ii <esc>2li
 " Parentheses
 inoremap jj ()<esc>i
 inoremap jJ ();<esc>hi
@@ -79,7 +81,6 @@ inoremap " ""<esc>i
 inoremap "" ""<esc>i
 inoremap cC ""<esc>i
 inoremap '' ''<esc>i
-
 " close < and >
 inoremap <z <><esc>i
 inoremap <> <><esc>i
