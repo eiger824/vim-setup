@@ -170,3 +170,5 @@ inoremap <leader>n $()<esc>i
 
 " Exec command
 nnoremap <leader>m :w<cr>:call CommandExec()<cr>
+" Autohighlight remap
+nnoremap <leader><leader> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
