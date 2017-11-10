@@ -32,6 +32,8 @@ function! ToggleLineComment()
         call setline(line('.'), pattern . " " . line)
     else  "  Comment was found  "
         call setline(line('.'), comment)
+        " Indent current line
+        execute "normal! =$"
     endif
 endfunction
 
@@ -44,12 +46,13 @@ function! ToggleBlockLineComment()
     let close_pattern = join(reverse(split(open_pattern, '\zs')), '')
     " Get current line
     let line = getline('.')
-    let comment1 = substitute(line, '^\s*' . fnameescape(open_pattern) . '\s*', "", "")
-    let comment2 = substitute(comment1, fnameescape(close_pattern) . '.*$', "", "")
+    let comment1 = substitute(line, fnameescape(open_pattern) . '\s*', "", "")
+    let comment2 = substitute(comment1, '\s*' . fnameescape(close_pattern), "", "")
     if line == comment2  " No comment was found  "
         call setline(line('.'), open_pattern . " " . line . " ". close_pattern)
     else  " Comment was found "
         call setline(line('.'), comment2)
+        execute "normal! =$"
     endif
 endfunction
 
@@ -60,5 +63,12 @@ function! ToggleBlockLineCommentRuntime()
         let open_pattern = "/*"
     endif
     let close_pattern = join(reverse(split(open_pattern, '\zs')), '')
-    call setline(line('.'), getline('.') . " " . open_pattern . "  " . close_pattern)
+    let line = getline('.')
+    let comment1 = substitute(line, fnameescape(open_pattern) . '\s*', "", "")
+    let comment2 = substitute(comment1, '\s*' . fnameescape(close_pattern), "", "")
+    if line == comment2  " No comment was found  "
+        call setline(line('.'), getline('.') . " " . open_pattern . "  " . close_pattern)
+    else
+        call setline(line('.'), comment2)
+    endif
 endfunction
