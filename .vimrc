@@ -146,9 +146,15 @@ nnoremap <C-U> :call BlockUncomment()<cr>
 " Comment current line
 inoremap <leader>c <esc>:call ToggleLineComment()<cr>A
 nnoremap <leader>c :call ToggleLineComment()<cr>
-inoremap <leader>C <esc>:call ToggleBlockLineComment()<cr>A
-nnoremap <leader>C :call ToggleBlockLineComment()<cr>
-"inoremap <leader>. /*  */<esc>2hi
+inoremap <leader>C <esc>:call ToggleBlockLineComment(0)<cr>A
+
+
+
+vnoremap <leader>C :call VisualToggleBlockLineCommentRuntime()<cr>
+
+
+
+nnoremap <leader>C :call ToggleBlockLineComment(0)<cr>
 inoremap <leader>. <esc>:call ToggleBlockLineCommentRuntime()<cr>$hhi
 
 " Turn on/off line mode
