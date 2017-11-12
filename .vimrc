@@ -50,7 +50,8 @@ nnoremap z =$;
 inoremap jk <esc>=$g;
 
 " Escape next closing )]}
-inoremap ii <esc>2li
+inoremap <tab><space> <esc>2li
+inoremap <space><tab> <esc>i
 " Parentheses
 inoremap jj ()<esc>i
 inoremap jJ ();<esc>hi
