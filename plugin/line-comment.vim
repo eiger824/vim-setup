@@ -84,22 +84,25 @@ fun! VisualToggleBlockLineCommentRuntime() range
     " Check if C/C++/Java/DTS file for /**/ type comments
     if open_pattern == "//"
         let open_pattern = "/*"
+    else
+        echo "WARNING: individual word comment in same line not supported for current language, skipping..."
+        return
     endif
     let close_pattern = join(reverse(split(open_pattern, '\zs')), '')
     let [line_start, column_start] = getpos("'<")[1:2]
     let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
+    " TODO: investigate if a function already does this
+    if line_start != line_end
+        return
     endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    let selection = join(lines, "\n")
-    " Commodity: remove last character
-    let selection = selection[:-2]
-    let result = substitute(getline('.'),
-                \ selection,
-                \ open_pattern . " " . selection . " " . close_pattern, "")
-    " And finally, set the new line's value
-    call setline(line('.'), result)
+    let current_line_str = getline('.')
+    let column_start -= 1
+    let column_end -= 2
+    let final_line_str = current_line_str
+    let final_line = split(final_line_str, '\zs')
+    let current_line = split(current_line_str, '\zs')
+    let offset = 2
+    call insert(final_line, open_pattern, column_start)
+    call insert(final_line, close_pattern, column_end + offset)
+    call setline(line('.'), join(final_line, ''))
 endfun
