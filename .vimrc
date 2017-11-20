@@ -78,7 +78,6 @@ inoremap `` ``<esc>i
 inoremap kk <esc>A<cr>{<cr><cr>}<esc>ki<tab>
 
 " Quotation marks
-inoremap " ""<esc>i
 inoremap "" ""<esc>i
 inoremap cC ""<esc>i
 inoremap '' ''<esc>i

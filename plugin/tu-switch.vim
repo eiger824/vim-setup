@@ -45,7 +45,7 @@ function! GetTranslationUnit(place)
 		if sys_parts[0] == include_line
 			let paths = systemlist("find " . rootDir . " -name " . simpleHeaderName)
 		else
-			let paths = systemlist("find " . searchDir . " -name " . simpleHeaderName)
+            let paths = systemlist("find " . searchDir . " " . rootDir . " -name " . simpleHeaderName)
 		endif
 		if empty(paths)
 			echo 'WARNING: File not found (' . headerName . ')'

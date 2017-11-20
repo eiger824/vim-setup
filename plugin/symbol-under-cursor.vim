@@ -1,3 +1,9 @@
+function! SanitizeString(str)
+    let string = substitute(a:str, '^\s\+', '', '')
+    let string = substitute(string, '\s\+$', '', '')
+    return string
+endfunction
+
 function! GetRelativePath(filename, topdir)
 	let split_filename = split(a:filename, '/')
 	let split_topdir = split(a:topdir, '/')
@@ -8,18 +14,17 @@ function! ExploreSymbolUnderCursor()
 	let current_word = expand("<cword>")
 	let current_line = line('.')
 	let current_file = expand("%:p")
-	echo "Current file: " . current_file
 	let topDir = GetRootDir()
 	let homeDir = system("echo -n $HOME")
-	if topDir ==# homeDir
+    if topDir ==# homeDir
 		echo 'Searching in ' . homeDir . ', this may take forever. Skipping search'
 		return
 	endif
-
+    let simpleName = split(topDir, '/')[-1]
+    echo 'Searching for "' . current_word . '" in ' . simpleName 
 	let matches = systemlist("grep -wnr " . current_word . " " . topDir . "/* | sed -e 's/\:\s\+/\:/g'")
-
 	let n = len(matches)
-
+    echo 'Done! ' n ' matches found'
 	if n == 1
 		let match_split = split(matches[0], ':')
 		let file = match_split[0]
@@ -35,18 +40,19 @@ function! ExploreSymbolUnderCursor()
 		let i = 0
 		while i < n
 			let match_split = split(matches[i], ':')
-			if len(match_split) == 3
-				let file = match_split[0]
-				let line = match_split[1]
-				let pattern = match_split[2]
+			if len(match_split) >= 3
+                let file = SanitizeString(match_split[0])
+                let line = SanitizeString(match_split[1])
+                let pattern = SanitizeString(match_split[2])
 
-				echo string(i) . "\t" . '"' . pattern . '"' . " at file: "
-							\ . GetRelativePath(file,topDir) . " (line " . string(line) . ")"
+                echo pattern
+                echo i ")    \"" . pattern . "\" at file: "
+                            \ . GetRelativePath(file,topDir) . " (line " line ")\n\n\n"
 			endif
-			let i+= 1
+            let i+= 1
 		endwhile
 		let opt = -1
-		while opt < 0 || opt >= n
+        while opt < 0 || opt >= n || empty(opt)
 			call inputsave()
 			let opt = input('Select option: ')
 			call inputrestore()
