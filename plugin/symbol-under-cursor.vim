@@ -34,7 +34,7 @@ function! ExploreSymbolUnderCursor()
 		else
 			echo 'About to open file ' . GetRelativePath(file,topDir)
 						\ . ' at line ' . line
-			execute ":edit " . file
+            execute ":edit +" . line . " " . file
 		endif
 	else
 		let i = 0
@@ -45,7 +45,6 @@ function! ExploreSymbolUnderCursor()
                 let line = SanitizeString(match_split[1])
                 let pattern = SanitizeString(match_split[2])
 
-                echo pattern
                 echo i ")    \"" . pattern . "\" at file: "
                             \ . GetRelativePath(file,topDir) . " (line " line ")\n\n\n"
 			endif
@@ -64,7 +63,7 @@ function! ExploreSymbolUnderCursor()
 		if file == current_file && line == current_line
 			echo "\nCurrent result selected, skipping ..."
 		else
-			execute ":edit " . file
+            execute ":edit +" . line . " " . file
 		endif
 	endif
 endfunction
