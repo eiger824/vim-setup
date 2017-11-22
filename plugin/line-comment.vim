@@ -11,7 +11,9 @@ function! GetFileExtension()
                 \ format == "java" ||
                 \ format == "dts"
         return "//"
-    elseif format == "sh" || format == "bash"
+    elseif format == "sh" || format == "bash" || format == "bb" || format == "bbappend" ||
+                \ format == "conf" || format == "cfg" || format == "bashrc" || format == "bash_aliases" ||
+                \ format == "config"
         return "#"
     elseif format == "vim" || format == "vimrc"
         return '"'
