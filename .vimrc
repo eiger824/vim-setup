@@ -165,6 +165,7 @@ nnoremap <leader>w :call RemoveTrailingWhitespaces()<cr>
 
 " Explore word under cursor
 nnoremap <leader>f :call ExploreSymbolUnderCursor()<cr>
+nnoremap <leader>e :call EnhancedSymbolSearch()<cr>
 nnoremap <leader>d :call Documentify()<cr>dd
 
 " Switch to previous buffer
