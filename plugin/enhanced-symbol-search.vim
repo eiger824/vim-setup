@@ -30,15 +30,9 @@ function! EnhancedSymbolSearch()
 	if n == 1
 		let match_split = split(matches[0], ':')
 		let file = match_split[0]
-		let line = match_split[1]
-		if file == current_file
-			echo 'Only match found in this file, skipping ...'
-		else
-			echo 'About to open file ' . GetRelativePath(file,topDir)
-						\ . ' at line ' . line
-            execute ":edit +" . line . " " . file
-		endif
-	else
+        let line = match_split[1]
+        execute ":edit +" . line . " " . file
+    else
 		let i = 0
 		while i < n
 			let match_split = split(matches[i], ':')
