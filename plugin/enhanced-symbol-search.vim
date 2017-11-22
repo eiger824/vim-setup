@@ -22,7 +22,7 @@ function! EnhancedSymbolSearch()
 	endif
     let simpleName = split(topDir, '/')[-1]
     echo 'Searching for "' . current_word . '" in ' . simpleName 
-    let cmd = 'grep -nER "^\s*[a-z][a-z]*\s*.*' . current_word . '.*(.*).*$" ' . topDir . '/* | \grep -v "^.*(.*' . current_word . '.*)*.*$" | \grep -v "^.*==*.*$"'
+    let cmd = 'grep -nER "^\s*[a-z][a-z]*\s*.*' . current_word . '.*(.*).*$" ' . topDir . '/* | \grep -v "^.*(.*' . current_word . '.*)*.*$" | \grep -v "^.*==*.*$" | grep -v ";$" | grep -v extern'
     let matches = systemlist(cmd . " | sed -e 's/\:\s\+/\:/g'")
     let n = len(matches)
     echo 'Done! ' n ' matches found'
@@ -41,8 +41,7 @@ function! EnhancedSymbolSearch()
                 let line = SanitizeString(match_split[1])
                 let pattern = SanitizeString(match_split[2])
 
-                echo i "   \"" . pattern . "\""
-                echo "     File: " . GetRelativePath(file,topDir) . " (line " line ")\n\n"
+                echon i "   " | echohl Error | echon pattern | echohl Normal | echo "     File: " . GetRelativePath(file,topDir) . " (line " line ")\n\n"
 			endif
             let i+= 1
 		endwhile
