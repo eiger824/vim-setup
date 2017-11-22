@@ -98,7 +98,7 @@ inoremap <leader><leader> <esc>A
 
 " File-Switch (FS) mappings
 nnoremap <F5> :FSHere<cr>
-nnoremap <C-o> :edit 
+nnoremap <C-o> :call EditOnCurrentDir()<cr>
 
 nnoremap s :w<cr>
 nnoremap se :wq<cr>

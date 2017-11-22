@@ -45,8 +45,8 @@ function! ExploreSymbolUnderCursor()
                 let line = SanitizeString(match_split[1])
                 let pattern = SanitizeString(match_split[2])
 
-                echo i ")    \"" . pattern . "\" at file: "
-                            \ . GetRelativePath(file,topDir) . " (line " line ")\n\n\n"
+                echo i "   \"" . pattern . "\""
+                echo "     File: " . GetRelativePath(file,topDir) . " (line " line ")\n\n"
 			endif
             let i+= 1
 		endwhile
