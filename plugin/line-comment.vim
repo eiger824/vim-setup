@@ -7,7 +7,7 @@ function! GetFileExtension()
     let format = split(current_filename, '\.')[-1]
     if format == "c" || format == "h" ||
                 \ format == "cpp" || format == "hpp" || format == "cc" || format == "cxx" ||
-                \ format == "tpp" ||
+                \ format == "tpp" || format == "tcc" ||
                 \ format == "java" ||
                 \ format == "dts"
         return "//"
