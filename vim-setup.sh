@@ -53,7 +53,6 @@ case $DISTRO in
 		DISTRO=debian
 		PM=apt-get
 		PMARGS="install -y"
-		CLANG="libclang-dev"
 		PY="python-dev python3-dev"
 		BUILD_ESSENTIAL="build-essential"
 		;;
@@ -61,7 +60,6 @@ case $DISTRO in
 		DISTRO=arch
 		PM=pacman
 		PMARGS=-S
-		CLANG="clang"
 		PY="python"
 		# Already included in the base package
 		BUILD_ESSENTIAL=""
@@ -210,13 +208,13 @@ then
 	mkdir $HOME/.vim/bundle/YouCompleteMe
 	git clone https://github.com/Valloric/YouCompleteMe.git $HOME/.vim/bundle/YouCompleteMe
 	echo "Installing necessary headers"
-	`sudo $PM $PMARGS $BUILD_ESSENTIAL cmake $PY $CLANG`
+	`sudo $PM $PMARGS $BUILD_ESSENTIAL cmake $PY`
 	# Change directory there
 	cd $HOME/.vim/bundle/YouCompleteMe
 	echo -e "\t[YCM] Initializing project ..."
 	git submodule update --init --recursive
 	echo -e "\t[YCM] Building project ..."
-	./install.py --clang-completer --system-libclang
+	./install.py --clang-completer
 	cd - &> /dev/null
 
 	# YouCompleteMe source script
