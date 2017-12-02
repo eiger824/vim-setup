@@ -75,7 +75,7 @@ inoremap ` ``<esc>i
 inoremap `` ``<esc>i
 
 " Add context in newline
-inoremap kk <esc>A<cr>{<cr><cr>}<esc>ki<tab>
+inoremap kk <esc>A<cr>{<cr>}<esc>O
 
 " Quotation marks
 inoremap "" ""<esc>i
@@ -109,8 +109,20 @@ nnoremap <leader>5 mzgg=G`z
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 nnoremap <leader>a <esc>ggvG
 
+"Source right autocomplete script depending on the language
+let format = split(expand('%:t'), '\.')
+if len(format) > 1
+    let format = format[-1]
+    if format ==# "c"
+        let res = system("test -h ~/.vim/.ycm_extra_conf.py && rm -f ~/.vim/.ycm_extra_conf.py")
+        let res = system("ln -s ~/.vim/.ycm_c_autocomp.py ~/.vim/.ycm_extra_conf.py")
+    else
+        let res = system("test -h ~/.vim/.ycm_extra_conf.py && rm -f ~/.vim/.ycm_extra_conf.py")
+        let res = system("ln -s ~/.vim/.ycm_c++_autocomp.py ~/.vim/.ycm_extra_conf.py")
+    endif
+endif
+" And source our ycm script
 execute pathogen#infect()
-
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -149,11 +161,7 @@ inoremap <leader>c <esc>:call ToggleLineComment()<cr>A
 nnoremap <leader>c :call ToggleLineComment()<cr>
 inoremap <leader>C <esc>:call ToggleBlockLineComment(0)<cr>A
 
-
-
 vnoremap <leader>C :call VisualToggleBlockLineCommentRuntime()<cr>
-
-
 
 nnoremap <leader>C :call ToggleBlockLineComment(0)<cr>
 inoremap <leader>. <esc>:call ToggleBlockLineCommentRuntime()<cr>$hhi

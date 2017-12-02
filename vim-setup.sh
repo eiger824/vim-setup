@@ -217,8 +217,16 @@ then
 	./install.py --clang-completer
 	cd - &> /dev/null
 
-	# YouCompleteMe source script
-	echo "Copying YCM source script"
-	cp .ycm_extra_conf.py $HOME/.vim
+fi
+# YouCompleteMe source scripts
+if [[ ! -f $HOME/.vim/.ycm_c_autocomp.py ]]
+then
+    echo "Copying YCM C autocompletion source script"
+    cp .ycm_c_autocomp.py $HOME/.vim
+fi
+if [[ ! -f $HOME/.vim/.ycm_c++_autocomp.py ]]
+then
+    echo "Copying YCM C++ autocompletion source script"
+    cp .ycm_c++_autocomp.py $HOME/.vim
 fi
 #############################################################
