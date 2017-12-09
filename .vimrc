@@ -44,6 +44,12 @@ inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr>return 0;<cr>}<cr><esc>
 inoremap iB #include <stdio.h>
 inoremap hej #include <stdio.h><cr><cr>int main(int argc, char* argv[])<cr>{<cr><bs>printf("Hello world!\n");<cr>return 0;<cr>}
 
+" Jump some lines
+nnoremap <leader>j 30j
+nnoremap <leader>k 30k
+nnoremap <leader>l 30l
+nnoremap <leader>h 30h
+
 " Indent current line
 nnoremap z =$;
 " Escape mapping - super useful!
@@ -188,3 +194,9 @@ inoremap <leader>n $()<esc>i
 nnoremap <leader>m :w<cr>:call CommandExec()<cr>
 " Autohighlight remap
 nnoremap <leader><leader> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
+
+
+nnoremap <leader>7 :call ToggleCurlyBraces()<cr>
+nnoremap <leader>8 :call ToggleParentheses()<cr>
+nnoremap <leader>9 :call ToggleSquareBrackets()<cr>
+nnoremap <leader>2 :call ToggleStringMarks()<cr>

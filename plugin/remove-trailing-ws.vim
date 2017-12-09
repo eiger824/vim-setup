@@ -5,8 +5,6 @@ function! RemoveTrailingWhitespaces()
 	let c = input('Remove?[Y|n]: ')
 	call inputrestore()
 
-	echo 'C: value is: ' c
-
 	if empty(c)
 			execute ":%s/\\s" . fnameescape(pattern) . "$//g"
 	else
