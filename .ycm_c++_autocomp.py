@@ -33,6 +33,7 @@ flags = [
     '-isystem', '/usr/local/include',
     '-isystem', '/usr/local/include/eigen3',
     '-isystem', '/usr/include',
+    '-isystem', '/usr/include/c++/7',
     '-I', 'include',
     '-I.',
     '-I..',
