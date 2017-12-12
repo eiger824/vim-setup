@@ -203,7 +203,6 @@ nnoremap <C-w>h <C-w>s
 nnoremap <C-l> <C-w><Right>
 nnoremap <C-h> <C-w><Left>
 
-
 nnoremap <leader>' ciw'<C-r>"'<esc>
 nnoremap <leader><leader>' bdwhPlxx 
 nnoremap <leader>2 ciw"<C-r>""<esc>
@@ -228,3 +227,6 @@ vnoremap <leader><leader>9 d2hPlxx
 
 nnoremap <leader>n :call SignFile()<cr>
 nnoremap <leader><Tab> :call LineLengthCorrect()<cr>
+
+" Backspace fix
+inoremap ^? <bs>
