@@ -196,7 +196,24 @@ nnoremap <leader>m :w<cr>:call CommandExec()<cr>
 nnoremap <leader><leader> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 
 
-nnoremap <leader>7 :call ToggleCurlyBraces()<cr>
-nnoremap <leader>8 :call ToggleParentheses()<cr>
-nnoremap <leader>9 :call ToggleSquareBrackets()<cr>
-nnoremap <leader>2 :call ToggleStringMarks()<cr>
+nnoremap <leader>' ciw'<C-r>"'<esc>
+nnoremap <leader><leader>' bdwhPlxx 
+nnoremap <leader>2 ciw"<C-r>""<esc>
+nnoremap <leader><leader>2 bdwhPlxx
+nnoremap <leader>7 ciw{<C-r>"}<esc>
+nnoremap <leader><leader>7 bdwhPlxx
+nnoremap <leader>8 ciw(<C-r>")<esc>
+nnoremap <leader><leader>8 bdwhPlxx
+nnoremap <leader>9 ciw[<C-r>"]<esc>
+nnoremap <leader><leader>9 bdwhPlxx
+
+vnoremap <leader>' di'<esc>pli'<esc>
+vnoremap <leader><leader>' d2hplxx
+vnoremap <leader>2 di"<esc>pli"<esc>
+vnoremap <leader><leader>2 d2hplxx
+vnoremap <leader>7 di{<esc>pli}<esc>
+vnoremap <leader><leader>7 d2hplxx
+vnoremap <leader>8 di(<esc>pli)<esc>
+vnoremap <leader><leader>8 d2hplxx
+vnoremap <leader>9 di[<esc>pli]<esc>
+vnoremap <leader><leader>9 d2hplxx

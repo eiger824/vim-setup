@@ -195,6 +195,24 @@ then
 fi
 #############################################################
 
+####################### vim-surround ########################
+if [[ ! -d "$(pwd)/vim-surround" ]]
+then
+    echo "im-surround is missing, cloning ..."
+    git clone https://github.com/tpope/vim-surround.git
+fi
+if [[ ! -h $HOME/.vim/doc/surround.txt ]]
+then
+    echo "Symlinking vim-surround documentation file"
+    ln -s $(pwd)/vim-surround/doc/surround.txt $HOME/.vim/doc/surround.txt
+fi
+if [[ ! -h $HOME/.vim/plugin/surround.vim ]]
+then
+    echo "Symlinking vim-surround/plugin/surround.vim"
+    ln -s $(pwd)/vim-surround/plugin/surround.vim $HOME/.vim/plugin/surround.vim
+fi
+#############################################################
+
 ###################### YouCompleteMe ########################
 if [[ ! -d "$HOME/.vim/bundle" ]]
 then
