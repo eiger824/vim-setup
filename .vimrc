@@ -95,8 +95,10 @@ inoremap nN \n
 inoremap tT \t
 
 " Some language-related tricks: C++
-inoremap cout cout <<   << endl;<esc>9hi
-inoremap cerr cerr <<   << endl;<esc>9hi
+inoremap cout cout <<  << endl;<esc>8hi
+inoremap cerr cerr <<  << endl;<esc>8hi
+" C/C++
+inoremap <leader># #include 
 
 " The very best: eE will move the cursor to the end
 " iif both previous and next chars are non-space
