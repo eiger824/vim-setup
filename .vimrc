@@ -71,8 +71,8 @@ inoremap [ []<esc>i
 inoremap [] []<esc>i
 
 " Curly braces
-inoremap kj {}<esc>i
-inoremap kJ {};<esc>hi
+inoremap <leader>g {}<esc>i
+inoremap <leader>G {};<esc>hi
 inoremap { {}<esc>i
 inoremap {} {}<esc>i
 
@@ -99,6 +99,7 @@ inoremap cout cout <<  << endl;<esc>8hi
 inoremap cerr cerr <<  << endl;<esc>8hi
 " C/C++
 inoremap <leader># #include 
+inoremap <leader>N <esc>:call InitHeader()<cr>
 
 " The very best: eE will move the cursor to the end
 " iif both previous and next chars are non-space
