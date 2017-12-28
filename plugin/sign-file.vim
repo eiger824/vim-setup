@@ -18,7 +18,7 @@ function! SignFile()
         let close_pattern = "*/"
         call append(line('^')    , open_pattern)
         call append(line('^') + 1, " * Filename:\t\t" . filename)
-        call append(line('^') + 2, "")
+        call append(line('^') + 2, " *")
         call append(line('^') + 3, " * Author:\t\t\t" . author)
         call append(line('^') + 4, " * Brief:\t\t\t" . brief)
         call append(line('^') + 5, " * Last modified:\t" . lastmodified )
