@@ -2,13 +2,13 @@ function! SignFile()
     call inputsave()
     let author = input("Enter author(s): ")
     call inputrestore()
-    let filename = expand("%")
+    let filename = expand("%:t")
     call inputsave()
     let brief = input("Enter short description: ")
     call inputrestore()
     let lastmodified = system("date")[:-2]
 
-    execute "normal! O"
+    execute "normal! ggO"
     call feedkeys("<esc>")
 
     let open_pattern = GetFileExtension()

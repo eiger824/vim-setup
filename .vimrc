@@ -224,3 +224,4 @@ vnoremap <leader>9 di[<esc>pli]<esc>
 vnoremap <leader><leader>9 d2hplxx
 
 nnoremap <leader>n :call SignFile()<cr>
+nnoremap <leader><Tab> :call LineLengthCorrect()<cr>
