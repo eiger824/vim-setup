@@ -198,6 +198,8 @@ nnoremap <leader>m :w<cr>:call CommandExec()<cr>
 " Autohighlight remap
 nnoremap <leader><leader> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 
+nnoremap <C-w>h <C-w>s
+
 
 nnoremap <leader>' ciw'<C-r>"'<esc>
 nnoremap <leader><leader>' bdwhPlxx 
@@ -220,3 +222,5 @@ vnoremap <leader>8 di(<esc>pli)<esc>
 vnoremap <leader><leader>8 d2hplxx
 vnoremap <leader>9 di[<esc>pli]<esc>
 vnoremap <leader><leader>9 d2hplxx
+
+nnoremap <leader>n :call SignFile()<cr>
