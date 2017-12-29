@@ -213,15 +213,15 @@ nnoremap <leader>9 ciw[<C-r>"]<esc>
 nnoremap <leader><leader>9 bdwhPlxx
 
 vnoremap <leader>' di'<esc>pli'<esc>
-vnoremap <leader><leader>' d2hplxx
+vnoremap <leader><leader>' d2hPlxx
 vnoremap <leader>2 di"<esc>pli"<esc>
-vnoremap <leader><leader>2 d2hplxx
+vnoremap <leader><leader>2 d2hPlxx
 vnoremap <leader>7 di{<esc>pli}<esc>
-vnoremap <leader><leader>7 d2hplxx
+vnoremap <leader><leader>7 d2hPlxx
 vnoremap <leader>8 di(<esc>pli)<esc>
-vnoremap <leader><leader>8 d2hplxx
+vnoremap <leader><leader>8 d2hPlxx
 vnoremap <leader>9 di[<esc>pli]<esc>
-vnoremap <leader><leader>9 d2hplxx
+vnoremap <leader><leader>9 d2hPlxx
 
 nnoremap <leader>n :call SignFile()<cr>
 nnoremap <leader><Tab> :call LineLengthCorrect()<cr>
