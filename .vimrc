@@ -99,6 +99,7 @@ inoremap cout cout <<  << endl;<esc>8hi
 inoremap cerr cerr <<  << endl;<esc>8hi
 " C/C++
 inoremap <leader># #include 
+inoremap <leader>D #define
 inoremap <leader>N <esc>:call InitHeader()<cr>
 
 " The very best: eE will move the cursor to the end

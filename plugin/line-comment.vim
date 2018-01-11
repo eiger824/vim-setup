@@ -13,7 +13,8 @@ function! GetFileExtension()
         return "//"
     elseif format == "sh" || format == "bash" || format == "bb" || format == "bbappend" ||
                 \ format == "conf" || format == "cfg" || format == "bashrc" || format == "bash_aliases" ||
-                \ format == "config"
+                \ format == "config" ||
+                \ format == "ovpn"
         return "#"
     elseif format == "vim" || format == "vimrc"
         return '"'
