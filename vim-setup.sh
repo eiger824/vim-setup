@@ -167,6 +167,9 @@ if [[ ! -d "$(pwd)/vim-fswitch" ]]
 then
 	echo FSwitch is missing, cloning ...
 	git clone https://github.com/derekwyatt/vim-fswitch.git
+    echo "Applying custom patch ..."
+    cd vim-fswitch
+    git am ../0001-cc-h-fswitch.patch
 fi
 if [[ ! -d "$HOME/.vim/doc" ]]
 then
