@@ -200,6 +200,8 @@ nnoremap <leader>m :w<cr>:call CommandExec()<cr>
 nnoremap <leader><leader> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 
 nnoremap <C-w>h <C-w>s
+nnoremap <C-n> <C-w>v
+nnoremap <C-m> <C-w>s
 nnoremap <C-l> <C-w><Right>
 nnoremap <C-j> <C-w><Down>
 nnoremap <C-k> <C-w><Up>
