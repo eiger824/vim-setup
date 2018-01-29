@@ -201,6 +201,8 @@ nnoremap <leader><leader> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 
 nnoremap <C-w>h <C-w>s
 nnoremap <C-l> <C-w><Right>
+nnoremap <C-j> <C-w><Down>
+nnoremap <C-k> <C-w><Up>
 nnoremap <C-h> <C-w><Left>
 
 nnoremap <leader>' ciw'<C-r>"'<esc>
