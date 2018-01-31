@@ -53,7 +53,7 @@ nnoremap <leader>h 30h
 " Indent current line
 nnoremap z =$;
 " Escape mapping - super useful!
-inoremap jk <esc>=$g;
+inoremap jk <esc>=$;
 
 " Escape next closing )]}
 inoremap ii <esc>2li
