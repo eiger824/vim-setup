@@ -237,3 +237,9 @@ inoremap ^? <bs>
 
 " Show current file
 nnoremap <leader>F :call ShowCurrentFile()<cr>
+
+" Set mark / get to some marks
+nnoremap ga `a
+nnoremap gb `b
+nnoremap gc `c
+nnoremap gd `d
