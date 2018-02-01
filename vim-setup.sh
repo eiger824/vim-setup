@@ -169,7 +169,7 @@ then
 	git clone https://github.com/derekwyatt/vim-fswitch.git
     echo "Applying custom patch ..."
     cd vim-fswitch
-    git am ../0001-cc-h-fswitch.patch
+    git am ../patches/0001-cc-h-fswitch.patch
 fi
 if [[ ! -d "$HOME/.vim/doc" ]]
 then

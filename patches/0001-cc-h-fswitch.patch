@@ -1,0 +1,47 @@
+From e7727e6370681ffd7b72c79a2477e268c6596d0e Mon Sep 17 00:00:00 2001
+From: Santiago Pagola <santipagola@gmail.com>
+Date: Mon, 29 Jan 2018 16:52:04 +0100
+Subject: [PATCH] cc-h fswitch
+
+---
+ plugin/fswitch.vim | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/plugin/fswitch.vim b/plugin/fswitch.vim
+index 68fd958..7808900 100755
+--- a/plugin/fswitch.vim
++++ b/plugin/fswitch.vim
+@@ -333,17 +333,19 @@ endfunction
+ "
+ augroup fswitch_au_group
+     au!
+-    au BufEnter *.c    call s:SetVariables('h',       'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
+-    au BufEnter *.cc   call s:SetVariables('hh',      'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
+-    au BufEnter *.cpp  call s:SetVariables('hpp,h',   'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
+-    au BufEnter *.cxx  call s:SetVariables('hxx',     'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
+-    au BufEnter *.C    call s:SetVariables('H',       'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
+-    au BufEnter *.m    call s:SetVariables('h',       'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
+-    au BufEnter *.h    call s:SetVariables('c,cpp,m', 'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
+-    au BufEnter *.hh   call s:SetVariables('cc',      'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
+-    au BufEnter *.hpp  call s:SetVariables('cpp',     'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
+-    au BufEnter *.hxx  call s:SetVariables('cxx',     'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
+-    au BufEnter *.H    call s:SetVariables('C',       'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
++    au BufEnter *.c    call s:SetVariables('h',         'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
++    au BufEnter *.cc   call s:SetVariables('hh',        'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
++    au BufEnter *.cc   call s:SetVariables('h',         'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
++    au BufEnter *.cpp  call s:SetVariables('hpp,h',     'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
++    au BufEnter *.cxx  call s:SetVariables('hxx',       'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
++    au BufEnter *.C    call s:SetVariables('H',         'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
++    au BufEnter *.m    call s:SetVariables('h',         'reg:/src/include/,reg:|src|include/**|,ifrel:|/src/|../include|')
++    au BufEnter *.h    call s:SetVariables('c,cpp,m',   'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
++    au BufEnter *.h    call s:SetVariables('cc',        'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
++    au BufEnter *.hh   call s:SetVariables('cc',        'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
++    au BufEnter *.hpp  call s:SetVariables('cpp',       'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
++    au BufEnter *.hxx  call s:SetVariables('cxx',       'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
++    au BufEnter *.H    call s:SetVariables('C',         'reg:/include/src/,reg:/include.*/src/,ifrel:|/include/|../src|')
+ augroup END
+ 
+ "
+-- 
+2.15.1
+
