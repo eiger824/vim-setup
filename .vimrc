@@ -234,3 +234,6 @@ nnoremap <leader><Tab> :call LineLengthCorrect()<cr>
 
 " Backspace fix
 inoremap ^? <bs>
+
+" Show current file
+nnoremap <leader>F :call ShowCurrentFile()<cr>
