@@ -245,3 +245,5 @@ nnoremap gc `c
 nnoremap gd `d
 
 nnoremap <leader>v :so $HOME/.vimrc<cr>
+
+nnoremap <C-F5> :e<cr>:echo "Reloaded!"<cr>
