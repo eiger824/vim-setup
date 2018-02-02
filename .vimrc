@@ -243,3 +243,5 @@ nnoremap ga `a
 nnoremap gb `b
 nnoremap gc `c
 nnoremap gd `d
+
+nnoremap <leader>v :so $HOME/.vimrc<cr>
