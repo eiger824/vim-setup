@@ -136,6 +136,15 @@ then
 	echo Onedark is missing, cloning ...
 	git clone https://github.com/joshdick/onedark.vim.git
 fi
+cd onedark.vim
+git am ../patches/0001-Custom-color-variants.patch
+echo -n "Applying "
+if [ $? -eq 0 ]; then
+    echo "DONE."
+else
+    echo "FAIL."
+fi
+cd ..
 if [[ ! -d "$HOME/.vim/colors" ]]
 then
 	echo "Creating $HOME/.vim/colors directory"
