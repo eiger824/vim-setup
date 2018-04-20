@@ -20,6 +20,8 @@ function! GetFileExtension()
         return '"'
     elseif format == "bashrc" || format == "bash_aliases"
         return "#"
+    else
+        return '#'
     endif
 endfunction
 
