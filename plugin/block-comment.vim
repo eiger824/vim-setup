@@ -1,6 +1,15 @@
 function! BlockComment(line1, line2)
-    call append(a:line1 - 1, "/*")
-    call append(a:line2 + 1, "*/")
+    let format = GetFileExtension()
+    if format == "//"
+        call append(a:line1 - 1, "/*")
+        call append(a:line2 + 1, "*/")
+    elseif format == "#"
+        let current = a:line1
+        while current <= a:line2
+            call setline(current, "# ". getline(current))
+            let current = current + 1
+        endwhile
+    endif
 endfunction
 
 function! BlockCommentInteractive()
