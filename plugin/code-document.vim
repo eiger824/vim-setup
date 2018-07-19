@@ -7,25 +7,39 @@ endfunction
 
 function AddField(linr, str)
 	call append(a:linr, a:str)
-	execute ":w"
-	execute ":edit " . expand("%:p")
+" 	execute ":w"
+" 	execute ":edit " . expand("%:p")
 endfunction
 
 
 function! Documentify()
+
+    let format = GetFileExtension()
+    let separator = ""
+
 	let current_line = line('.') - 1
+    let line_containing_fname = getline(current_line + 2)
+    let name = system("echo \"".line_containing_fname."\" | cut -d\"(\" -f1 | cut -d\" \" -f2")
+    let name = name[0:-2]
 
-	call AddField(current_line, "/*")
-	let current_line += 1
+    if format == "//"
+        call AddField(current_line, "/*")
+        let current_line += 1
+        let separator=" *"
+    elseif format == "#"
+        let separator="#"
+    endif
 
-	call AddField(current_line, "*/")
+    if format == "//"
+        call AddField(current_line, "*/")
+    endif
 
-	let name = Prompt("Function name: ")
-	call AddField(current_line, " * Function:\t" . name)
+" 	let name = Prompt("Function name: ")
+    call AddField(current_line, separator . " Function:            " . name)
 	let current_line += 1
 
 	let desc = Prompt("Description: ")
-	call AddField(current_line, " * Brief:\t" . desc)
+    call AddField(current_line, separator . " Brief:               " . desc)
 	let current_line += 1
 
 	let any = Prompt("Any params? [Y]n: ")
@@ -36,14 +50,14 @@ function! Documentify()
 		while current < n
 			let param_name = Prompt(string(current + 1) . "/" . string(n) . ' Param name: ')
 			let param_desc = Prompt(string(current + 1) . "/" . string(n) . ' Param description: ')
-			call AddField(current_line, " * @param " . param_name . ":\t" . param_desc)
+            call AddField(current_line, separator . " @param " . param_name . ":     " . param_desc)
 			let current += 1
 			let current_line += 1
 		endwhile
 	endif
 
 	let returns = Prompt("Return value(s)?: ")
-	call AddField(current_line, " * Returns:\t" . returns)
+    call AddField(current_line, separator . " Returns:             " . returns)
 
 	call feedkeys("<cr>")
 
