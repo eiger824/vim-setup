@@ -80,7 +80,7 @@ then
 	echo "Vim found, skipping download..."
 else
 	echo "Going to install vim!"
-	`sudo $PM $PMARGS vim`
+	#`sudo $PM $PMARGS vim`
 fi
 
 # Next, copy our favorite .vimrc. Don't just override if existing .vimrc
@@ -242,7 +242,7 @@ then
 	mkdir $HOME/.vim/bundle/YouCompleteMe
 	git clone https://github.com/Valloric/YouCompleteMe.git $HOME/.vim/bundle/YouCompleteMe
 	echo "Installing necessary headers"
-	`sudo $PM $PMARGS $BUILD_ESSENTIAL cmake $PY`
+	#`sudo $PM $PMARGS $BUILD_ESSENTIAL cmake $PY`
 	# Change directory there
 	cd $HOME/.vim/bundle/YouCompleteMe
 	echo -e "\t[YCM] Initializing project ..."

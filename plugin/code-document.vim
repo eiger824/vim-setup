@@ -19,7 +19,7 @@ function! Documentify()
 
 	let current_line = line('.') - 1
     let line_containing_fname = getline(current_line + 2)
-    let name = system("echo \"".line_containing_fname."\" | cut -d\"(\" -f1 | cut -d\" \" -f2")
+    let name = system("echo \"".line_containing_fname."\" | cut -d\"(\" -f1 | sed -e \"s,\\s\\+,\\n,g\" | sed -e \"/^\\s*$/d\" | tail -1")
     let name = name[0:-2]
 
     if format == "//"
@@ -34,7 +34,6 @@ function! Documentify()
         call AddField(current_line, "*/")
     endif
 
-" 	let name = Prompt("Function name: ")
     call AddField(current_line, separator . " Function:            " . name)
 	let current_line += 1
 
