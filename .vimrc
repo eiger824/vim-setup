@@ -24,7 +24,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
-set foldmethod=indent
+set foldmethod=manual
 
 "nnoremap A ^
 nnoremap E $
@@ -42,7 +42,6 @@ nnoremap DD :1,$d<cr>
 " For the very lazy ass: mini-prototype of main() and classic includes
 inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr>return 0;<cr>}<cr><esc>3ki<tab>
 inoremap iB #include <stdio.h>
-inoremap hej #include <stdio.h><cr><cr>int main(int argc, char* argv[])<cr>{<cr><bs>printf("Hello world!\n");<cr>return 0;<cr>}
 
 " Jump some lines
 nnoremap <leader>j 30j
@@ -250,5 +249,7 @@ nnoremap <C-F5> :e<cr>:echo "Reloaded!"<cr>
 
 nnoremap <leader>b ggO#!/bin/bash<cr><cr>
 
+vnoremap <leader>f zf
+vnoremap <leader>u zo
+vnoremap <leader>k :call ContextBlock()<cr>
 
-vnoremap kk :call ContextBlock()<cr>
