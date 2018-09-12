@@ -105,8 +105,9 @@ inoremap nN \n
 inoremap tT \t
 
 " Some language-related tricks: C++
-inoremap cout cout <<  << endl;<esc>8hi
-inoremap cerr cerr <<  << endl;<esc>8hi
+inoremap <C-C> cout << 
+inoremap <C-O> cerr << 
+inoremap <C-E> <esc>A << endl;
 " C/C++
 inoremap <leader># #include 
 inoremap <leader>D #define
@@ -170,10 +171,8 @@ nnoremap <F7> :call GetTranslationUnit(1)<cr>
 
 " Comments: add new block comment
 inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
-inoremap <C-C> <esc>:call BlockCommentInteractive()<cr>i
 nnoremap <C-C> :call BlockCommentInteractive()<cr>
 vnoremap <C-C> :call VisualBlockComment()<cr>
-inoremap <C-U> <esc>:call BlockUncomment()<cr>i
 nnoremap <C-U> :call BlockUncomment()<cr>
 
 " Comment current line
