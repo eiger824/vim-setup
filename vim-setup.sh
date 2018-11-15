@@ -80,7 +80,7 @@ then
 	echo "Vim found, skipping download..."
 else
 	echo "Going to install vim!"
-	#`sudo $PM $PMARGS vim`
+	sudo $PM $PMARGS vim
 fi
 
 # Next, copy our favorite .vimrc. Don't just override if existing .vimrc
@@ -137,7 +137,7 @@ then
 	git clone https://github.com/joshdick/onedark.vim.git
 fi
 cd onedark.vim
-git am ../patches/0001-Custom-color-variants.patch
+# git am ../patches/0001-Custom-color-variants.patch
 echo -n "Applying "
 if [ $? -eq 0 ]; then
     echo "DONE."
@@ -150,7 +150,7 @@ then
 	echo "Creating $HOME/.vim/colors directory"
 	mkdir $HOME/.vim/colors
 fi
-if [[ ! -h $HOME/.vim/colors/onedark.vim ]]
+if [[ ! -f $HOME/.vim/colors/onedark.vim ]]
 then
 	echo "Symlinking colors/onedark.vim"
 	ln -s $(pwd)/onedark.vim/colors/onedark.vim $HOME/.vim/colors/onedark.vim

@@ -1,7 +1,8 @@
 function! SignFile()
-    call inputsave()
-    let author = input("Enter author(s): ")
-    call inputrestore()
+    " Parse the author from git's data
+    let author = system("git config -z user.name")[:-2]
+    let email = system("git config -z user.email")[:-2]
+    let author = author." <".email.">"
     let filename = expand("%:t")
     call inputsave()
     let brief = input("Enter short description: ")
