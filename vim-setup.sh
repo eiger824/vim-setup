@@ -6,6 +6,21 @@
 #
 # Author: Santiago Pagola
 
+usage()
+{
+    cat << EOF
+USAGE: $(basename $0) [OPTIONS]
+
+OPTIONS:
+-h --help           Print this help and exit.
+-o --only-plugins   Only plugins, i.e., no third party stuff is installed (i.e.) no
+                    color schemes, no autocorrect.
+-s --show           Show only information about current distro and packages to install
+                    This is the default mode, i.e., by default, everything is installed.
+-t --third-party    Install third party plugins as well.
+EOF
+}
+
 err()
 {
     echo "$@" >&2
@@ -35,6 +50,41 @@ get_host()
         echo -n "fedora"
     fi
 }
+
+# Parse options
+showonly=0
+thirdparty=1
+shortopts="host"
+longopts="--long help --long only-plugins --long show --long third-party"
+options=$(getopt -o ${shortopts} ${longopts} -- "$@")
+[ $? -eq 0 ] ||
+{
+    usage
+    exit 1
+}
+eval set -- "$options"
+while true; do
+    case "$1" in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -o|--only-plugins)
+            thirdparty=0
+            ;;
+        -s|--show)
+            showonly=1
+            ;;
+        -t|--third-party)
+            thirdparty=1
+            ;;
+        --)
+            shift
+            break
+            ;;
+    esac
+    shift
+done
 
 if [[ `basename $(pwd)` != "vim-setup" ]]
 then
@@ -68,6 +118,16 @@ esac
 
 echo "Current distro: ${distro} (${HOST})"
 
+# Just print some info if -s was provided
+if [ ${showonly} -eq 1 ]; then
+    cat << EOF
+The following dependencies will be installed:
+
+$ ${pm} ${pm_args} ${pkgs} vim
+EOF
+    exit 0
+fi
+
 # Find out if vim installed. Usually, vim should be in /usr/bin/vim
 echo "Installing dependencies first"
 sudo ${pm} ${pm_args} ${pkgs}
@@ -97,7 +157,7 @@ test -h $HOME/.vimrc || ln -s $PWD/.vimrc $HOME/.vimrc
 if [[ -h $HOME/.vimrc ]]; then
     echo "Success"
 else
-    echo "Something went wrong..."
+    err "Something went wrong..."
 fi
 
 # Next: plugins
@@ -113,6 +173,11 @@ for plugin in $(find plugin -type f); do
     fi
 done
 
+# Keep on if third-party was set
+if [ ${thirdparty} -eq 0 ]; then
+    echo -e "\nDone"
+    exit 0
+fi
 ###########################################################
 ####################### 3rd party stuff ###################
 ###########################################################
