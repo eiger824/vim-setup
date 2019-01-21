@@ -6,92 +6,82 @@
 #
 # Author: Santiago Pagola
 
+err()
+{
+    echo "$@" >&2
+}
+
+die()
+{
+    err "$@"
+    exit 1
+}
+
+get_host()
+{
+    local name
+    local fname
+    name="$@"
+    fname="/etc/issue"
+
+    if grep -i ubuntu ${fname} &> /dev/null; then
+        echo -n "ubuntu"
+    elif grep -i mint ${fname} &> /dev/null; then
+        echo -n "mint"
+    elif grep -i arch ${fname} &> /dev/null; then
+        echo -n "arch"
+    else
+        # TODO: add more options. What about *BSD?
+        echo -n "fedora"
+    fi
+}
+
 if [[ `basename $(pwd)` != "vim-setup" ]]
 then
 	echo "Run this script from root directory"
 	exit 1
 fi
 
-function GetDistro
-{
-	# Return 0 for debian
-	# Return 1 for arch
-	# Return 100 for fedora
-	TYPE=$@
-	echo $TYPE | grep -qi ubuntu
-	if [ $? -eq 0 ]
-	then
-		FLAVOR="ubuntu"
-		return 0
-	fi
-
-	echo $TYPE | grep -iq mint
-	if [ $? -eq 0 ]
-	then
-		FLAVOR="mint"
-		return 0
-	fi
-
-	echo $TYPE | grep -iq arch
-	if [ $? -eq 0 ]
-	then
-		FLAVOR="arch"
-		return 1
-	fi
-
-	# Otherwise return other
-	return 100
-}
-
 # First find out which distro is being used
-ISSUE=$(cat /etc/issue | cut -d" " -f1-2)
-ISSUE=$(eval echo ${ISSUE,,})
-GetDistro $ISSUE
-DISTRO=$?
-case $DISTRO in
-	0)
-		DISTRO=debian
-		PM=apt-get
-		PMARGS="install -y"
-		PY="python-dev python3-dev"
-		BUILD_ESSENTIAL="build-essential"
+HOST=$(get_host)
+case ${HOST,,} in
+    ubuntu|mint)
+		distro=debian
+		pm=apt
+		pm_args="install -y"
+		python_pkgs="python-dev python3-dev"
+		build_essential="build-essential"
 		;;
-	1)
-		DISTRO=arch
-		PM=pacman
-		PMARGS=-S
-		PY="python"
+    arch)
+		distro=arch
+		pm=pacman
+		pm_args=-S
+		python_pkgs="python"
 		# Already included in the base package
-		BUILD_ESSENTIAL=""
+		build_essential=""
 		;;
 	*)
-		DISTRO=fedora
-		PM=yum
-		PMARGS=install
+		distro=fedora
+		pm=yum
+		pm_args=install
 		;;
 esac
 
-echo "Current distro: $DISTRO($FLAVOR)"
-
+echo "Current distro: ${distro} (${HOST})"
 
 # Find out if vim installed. Usually, vim should be in /usr/bin/vim
-if [[ -f /usr/bin/vim ]]
-then
-	echo "Vim found, skipping download..."
-else
+if [[ ! -f /usr/bin/vim ]]; then
 	echo "Going to install vim!"
-	sudo $PM $PMARGS vim
+    sudo ${pm} ${pm_args} ${python_pkgs} ${build_essential} vim
 fi
 
 # Next, copy our favorite .vimrc. Don't just override if existing .vimrc
 # is found at home, first back it up
 echo "Looking for existent .vimrc in $HOME"
-if [[ -f $HOME/.vimrc ]]
-then
+if [[ -f $HOME/.vimrc ]]; then
 	# Last check: if it's NOT a symlink (before this script
 	# came to life), just make a hard copy, not a symlink
-	if [[ ! -h $HOME/.vimrc ]]
-	then
+    if [[ ! -h $HOME/.vimrc ]]; then
 		echo "Found, backing up"
 		mv $HOME/.vimrc $HOME/.vimrc.old
 	fi
@@ -102,67 +92,48 @@ fi
 test -h $HOME/.vimrc || ln -s $PWD/.vimrc $HOME/.vimrc
 
 # Check that the file was successfully created
-if [[ -h $HOME/.vimrc ]]
-then
+if [[ -h $HOME/.vimrc ]]; then
 	echo "Success"
 else
 	echo "Something went wrong..."
 fi
 
 # Next: plugins
-if [[ ! -d $HOME/.vim/plugin ]]
-then
+if [[ ! -d $HOME/.vim/plugin ]]; then
 	mkdir -p $HOME/.vim/plugin
 fi
 
-for plugin in $(find plugin -type f)
-do
+for plugin in $(find plugin -type f); do
 	# Symlink each plugin instead of copying
-	if [[ ! -h $HOME/.vim/$plugin ]]
-	then
+    if [[ ! -h $HOME/.vim/$plugin ]]; then
 		echo "Symlinking $(basename $plugin)"
 		ln -s $(pwd)/$plugin $HOME/.vim/$plugin
 	fi
 done
-
 
 ###########################################################
 ####################### 3rd party stuff ###################
 ###########################################################
 
 ###################### Onedark theme ######################
-if [[ ! -d "$(pwd)/onedark.vim" ]]
-then
+if [[ ! -d "$(pwd)/onedark.vim" ]]; then
 	echo Onedark is missing, cloning ...
 	git clone https://github.com/joshdick/onedark.vim.git
 fi
-cd onedark.vim
-# git am ../patches/0001-Custom-color-variants.patch
-echo -n "Applying "
-if [ $? -eq 0 ]; then
-    echo "DONE."
-else
-    echo "FAIL."
-fi
-cd ..
-if [[ ! -d "$HOME/.vim/colors" ]]
-then
+if [[ ! -d "$HOME/.vim/colors" ]]; then
 	echo "Creating $HOME/.vim/colors directory"
 	mkdir $HOME/.vim/colors
 fi
-if [[ ! -f $HOME/.vim/colors/onedark.vim ]]
-then
+if [[ ! -f $HOME/.vim/colors/onedark.vim ]]; then
 	echo "Symlinking colors/onedark.vim"
 	ln -s $(pwd)/onedark.vim/colors/onedark.vim $HOME/.vim/colors/onedark.vim
 fi
 
-if [[ ! -d "$HOME/.vim/autoload" ]]
-then
+if [[ ! -d "$HOME/.vim/autoload" ]]; then
 	echo "Creating $HOME/.vim/autoload directory"
 	mkdir $HOME/.vim/autoload
 fi
-if [[ ! -h $HOME/.vim/autoload/onedark.vim ]]
-then
+if [[ ! -h $HOME/.vim/autoload/onedark.vim ]]; then
 	echo "Symlinking autoload/onedark.vim"
 	ln -s $(pwd)/onedark.vim/autoload/onedark.vim $HOME/.vim/autoload/onedark.vim
 fi
@@ -172,8 +143,7 @@ sed -e 's/^\(\s\+\\\s\+\"white\".*\"gui\"\:\s*\"#\)[0-9|A-Z][0-9|A-Z]*\(.*\"cter
 #############################################################
 
 ######################## FSwitch plugin #####################
-if [[ ! -d "$(pwd)/vim-fswitch" ]]
-then
+if [[ ! -d "$(pwd)/vim-fswitch" ]]; then
 	echo FSwitch is missing, cloning ...
 	git clone https://github.com/derekwyatt/vim-fswitch.git
     echo "Applying custom patch ..."
@@ -181,86 +151,76 @@ then
     git am ../patches/0001-cc-h-fswitch.patch
     cd ..
 fi
-if [[ ! -d "$HOME/.vim/doc" ]]
-then
+if [[ ! -d "$HOME/.vim/doc" ]]; then
 	echo "Creating $HOME/.vim/doc directory"
 	mkdir $HOME/.vim/doc
 fi
-if [[ ! -h $HOME/.vim/doc/fswitch.txt ]]
-then
+if [[ ! -h $HOME/.vim/doc/fswitch.txt ]]; then
 	echo "Symlinking vim-fswitch/doc/fswitch.txt"
 	ln -s $(pwd)/vim-fswitch/doc/fswitch.txt $HOME/.vim/doc/fswitch.txt
 fi
-if [[ ! -h $HOME/.vim/plugin/fswitch.vim ]]
-then
+if [[ ! -h $HOME/.vim/plugin/fswitch.vim ]]; then
 	echo "Symlinking vim-fswitch/plugin/fswitch.vim"
 	ln -s $(pwd)/vim-fswitch/plugin/fswitch.vim $HOME/.vim/plugin/fswitch.vim
 fi
 #############################################################
 
 ########################### Pathogen ########################
-if [[ ! -d "$(pwd)/vim-pathogen" ]]
-then
+if [[ ! -d "$(pwd)/vim-pathogen" ]]; then
 	echo "Pathogen is missing, cloning ..."
 	git clone https://github.com/tpope/vim-pathogen.git
 fi
-if [[ ! -h $HOME/.vim/autoload/pathogen.vim ]]
-then
+if [[ ! -h $HOME/.vim/autoload/pathogen.vim ]]; then
 	echo "Symlinking vim-pathogen/autoload/pathogen.vim"
 	ln -s $(pwd)/vim-pathogen/autoload/pathogen.vim $HOME/.vim/autoload/pathogen.vim
 fi
 #############################################################
 
 ####################### vim-surround ########################
-if [[ ! -d "$(pwd)/vim-surround" ]]
-then
-    echo "im-surround is missing, cloning ..."
+if [[ ! -d "$(pwd)/vim-surround" ]]; then
+    echo "vim-surround is missing, cloning ..."
     git clone https://github.com/tpope/vim-surround.git
 fi
-if [[ ! -h $HOME/.vim/doc/surround.txt ]]
-then
+if [[ ! -h $HOME/.vim/doc/surround.txt ]]; then
     echo "Symlinking vim-surround documentation file"
     ln -s $(pwd)/vim-surround/doc/surround.txt $HOME/.vim/doc/surround.txt
 fi
-if [[ ! -h $HOME/.vim/plugin/surround.vim ]]
-then
+if [[ ! -h $HOME/.vim/plugin/surround.vim ]]; then
     echo "Symlinking vim-surround/plugin/surround.vim"
     ln -s $(pwd)/vim-surround/plugin/surround.vim $HOME/.vim/plugin/surround.vim
 fi
 #############################################################
 
 ###################### YouCompleteMe ########################
-if [[ ! -d "$HOME/.vim/bundle" ]]
-then
-	echo "Creating $HOME/.vim/bundle directory"
-	mkdir $HOME/.vim/bundle
-fi
-# Clone the project directly in there
-if [[ ! -d "$HOME/.vim/bundle/YouCompleteMe" ]]
-then
-	echo "YouCompleteMe is missing, cloning ..."
-	mkdir $HOME/.vim/bundle/YouCompleteMe
-	git clone https://github.com/Valloric/YouCompleteMe.git $HOME/.vim/bundle/YouCompleteMe
-	echo "Installing necessary headers"
-	#`sudo $PM $PMARGS $BUILD_ESSENTIAL cmake $PY`
-	# Change directory there
-	cd $HOME/.vim/bundle/YouCompleteMe
-	echo -e "\t[YCM] Initializing project ..."
-	git submodule update --init --recursive
-	echo -e "\t[YCM] Building project ..."
-	./install.py --clang-completer
-	cd - &> /dev/null
+# Set up VUNDLE
+test -d ~/.vim/bundle/Vundle.vim ||
+{
+    mkdir -p ~/.vim/bundle/Vundle.vim
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    # Install YCM
+    echo -n "Install plugins now (it may take a long time)? [Y/n]: "
+    read ans
+    case $ans in
+        [yY]|[yY][eE][sS]|"")
+            vim +PluginInstall +qall
+            ;;
+        *)
+            echo "Skipping install. You can install plugins with :PluginInstall from inside vim."
+            ;;
 
-fi
+    esac
+}
 # YouCompleteMe source scripts
-if [[ ! -f $HOME/.vim/.ycm_c_autocomp.py ]]
-then
+if [[ ! -f $HOME/.vim/.ycm_c_autocomp.py ]]; then
     echo "Copying YCM C autocompletion source script"
     cp .ycm_c_autocomp.py $HOME/.vim
 fi
-if [[ ! -f $HOME/.vim/.ycm_c++_autocomp.py ]]
-then
+if [[ ! -f $HOME/.vim/.ycm_c++_autocomp.py ]]; then
     echo "Copying YCM C++ autocompletion source script"
     cp .ycm_c++_autocomp.py $HOME/.vim
 fi
 #############################################################
+ret=$?
+echo -e "\nDone."
+exit ${ret} 
+

@@ -1,3 +1,15 @@
+" Vundle related
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" Plugin list
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+call vundle#end()
+filetype plugin indent on
+
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -8,7 +20,6 @@ set number
 set cursorline
 
 filetype indent on
-filetype plugin indent on
 set wildmenu
 
 set lazyredraw
