@@ -196,36 +196,37 @@ fi
 ###################### YouCompleteMe ########################
 # Set up VUNDLE
 test -d ~/.vim/bundle/Vundle.vim ||
-    {
-        mkdir -p ~/.vim/bundle/Vundle.vim
-        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-        # Install YCM
-        echo -n "Install plugins now (it may take a long time)? [Y/n]: "
-        read ans
-        case $ans in
-            [yY]|[yY][eE][sS]|"")
-                vim +PluginInstall +qall
-                echo "Download completed. Building now!"
-                cd ~/.vim/bundle/YouCompleteMe
-                ./install.py --clang-completer
-                ;;
-            *)
-                echo "Skipping install. You can install plugins with :PluginInstall from inside vim."
-                ;;
+{
+    mkdir -p ~/.vim/bundle/Vundle.vim
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    # Install YCM
+    echo -n "Install plugins now (it may take a long time)? [Y/n]: "
+    read ans
+    case $ans in
+        [yY]|[yY][eE][sS]|"")
+            vim +PluginInstall +qall
+            echo "Download completed. Building now!"
+            pushd ~/.vim/bundle/YouCompleteMe
+            ./install.py --clang-completer
+            ;;
+        *)
+            echo "Skipping install. You can install plugins with :PluginInstall from inside vim."
+            ;;
 
-            esac
-        }
-        # YouCompleteMe source scripts
-        if [[ ! -f $HOME/.vim/.ycm_c_autocomp.py ]]; then
-            echo "Copying YCM C autocompletion source script"
-            cp .ycm_c_autocomp.py $HOME/.vim
-        fi
-        if [[ ! -f $HOME/.vim/.ycm_c++_autocomp.py ]]; then
-            echo "Copying YCM C++ autocompletion source script"
-            cp .ycm_c++_autocomp.py $HOME/.vim
-        fi
-        #############################################################
-        ret=$?
-        echo -e "\nDone."
-        exit ${ret}
+    esac
+    popd
+}
+# YouCompleteMe source scripts
+if [[ ! -f $HOME/.vim/.ycm_c_autocomp.py ]]; then
+    echo "Copying YCM C autocompletion source script"
+    cp .ycm_c_autocomp.py $HOME/.vim
+fi
+if [[ ! -f $HOME/.vim/.ycm_c++_autocomp.py ]]; then
+    echo "Copying YCM C++ autocompletion source script"
+    cp .ycm_c++_autocomp.py $HOME/.vim
+fi
+#############################################################
+ret=$?
+echo -e "\nDone."
+exit ${ret}
 
