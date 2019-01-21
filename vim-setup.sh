@@ -49,30 +49,32 @@ case ${HOST,,} in
 		distro=debian
 		pm=apt
 		pm_args="install -y"
-		python_pkgs="python-dev python3-dev"
-		build_essential="build-essential"
+        pkgs="python-dev python3-dev build-essential cmake"
 		;;
     arch)
 		distro=arch
 		pm=pacman
 		pm_args=-S
-		python_pkgs="python"
-		# Already included in the base package
-		build_essential=""
+        # build-essential already included in the base package
+		pkgs="python"
 		;;
 	*)
 		distro=fedora
 		pm=yum
 		pm_args=install
+        pkgs="python python3 cmake"
 		;;
 esac
 
 echo "Current distro: ${distro} (${HOST})"
 
 # Find out if vim installed. Usually, vim should be in /usr/bin/vim
+echo "Installing dependencies first"
+sudo ${pm} ${pm_args} ${pkgs}
+
 if [[ ! -f /usr/bin/vim ]]; then
 	echo "Going to install vim!"
-    sudo ${pm} ${pm_args} ${python_pkgs} ${build_essential} vim
+    sudo ${pm} ${pm_args} vim
 fi
 
 # Next, copy our favorite .vimrc. Don't just override if existing .vimrc
@@ -203,6 +205,9 @@ test -d ~/.vim/bundle/Vundle.vim ||
     case $ans in
         [yY]|[yY][eE][sS]|"")
             vim +PluginInstall +qall
+            echo "Download completed. Building now!"
+            cd ~/.vim/bundle/YouCompleteMe
+            ./install.py --clang-completer
             ;;
         *)
             echo "Skipping install. You can install plugins with :PluginInstall from inside vim."
