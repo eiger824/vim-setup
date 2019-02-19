@@ -273,13 +273,13 @@ test -d ~/.vim/bundle/Vundle.vim ||
             echo "Download completed. Building now!"
             pushd ~/.vim/bundle/YouCompleteMe
             ./install.py --clang-completer
+            popd
             ;;
         *)
             echo "Skipping install. You can install plugins with :PluginInstall from inside vim."
             ;;
 
     esac
-    popd
 }
 # YouCompleteMe source scripts
 if [[ ! -f $HOME/.vim/.ycm_c_autocomp.py ]]; then
