@@ -9,7 +9,7 @@ function! GetFileExtension()
                 \ format == "cpp" || format == "hpp" || format == "cc" || format == "cxx" ||
                 \ format == "tpp" || format == "tcc" ||
                 \ format == "java" ||
-                \ format == "dts"
+                \ format == "dts" || format == "l" || format == "y" || format == "cu" || format == "cl"
         return "//"
     elseif format == "sh" || format == "bash" || format == "bb" || format == "bbappend" ||
                 \ format == "conf" || format == "cfg" || format == "bashrc" || format == "bash_aliases" ||
