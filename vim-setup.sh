@@ -39,7 +39,7 @@ get_host()
     name="$@"
     fname="/etc/issue"
 
-    if grep -i ubuntu ${fname} &> /dev/null; then
+    if grep -i -E '(ubuntu)|(elementary)' ${fname} &> /dev/null; then
         echo -n "ubuntu"
     elif grep -i mint ${fname} &> /dev/null; then
         echo -n "mint"
@@ -106,7 +106,7 @@ case ${HOST,,} in
         pm=pacman
         pm_args=-S
         # build-essential already included in the base package
-        pkgs="python"
+        pkgs="python cmake"
         ;;
     *)
         distro=fedora
