@@ -51,6 +51,20 @@ get_host()
     fi
 }
 
+check_git_user_set()
+{
+	local name
+	local email
+	if [ ! -d ~/.gitconfig ]; then
+		echo -n "Enter your GIT user name: "
+		read name
+		echo -n "Enter your GIT user e-mail: "
+		read email
+		git config --global user.name $name
+		git config --global user.email $email
+	fi
+}
+
 # Parse options
 showonly=0
 thirdparty=1
@@ -91,6 +105,8 @@ then
     echo "Run this script from root directory"
     exit 1
 fi
+
+check_git_user_set
 
 # First find out which distro is being used
 HOST=$(get_host)
