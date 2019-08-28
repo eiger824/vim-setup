@@ -134,10 +134,10 @@ nnoremap <leader>a <esc>ggvG
 let format = split(expand('%:t'), '\.')
 if len(format) > 1
     let format = format[-1]
-    if format ==# "c"
+    if format ==# "c" || format ==# "h"
         let res = system("test -h ~/.vim/.ycm_extra_conf.py && rm -f ~/.vim/.ycm_extra_conf.py")
         let res = system("ln -s ~/.vim/.ycm_c_autocomp.py ~/.vim/.ycm_extra_conf.py")
-    else
+    elseif format ==# "cc" || format ==# "cpp" || format ==# "tcc" || format ==# "tpp" || format == "hh" || format ==# "hpp"
         let res = system("test -h ~/.vim/.ycm_extra_conf.py && rm -f ~/.vim/.ycm_extra_conf.py")
         let res = system("ln -s ~/.vim/.ycm_c++_autocomp.py ~/.vim/.ycm_extra_conf.py")
     endif
@@ -164,6 +164,10 @@ endif
 "Apply onedark coloring
 colorscheme onedark
 syntax on
+" Apply monokai
+" colorscheme molokai
+" let g:molokai_original = 1
+" let g:rehash256 = 1
 
 nnoremap <F6> :call GetTranslationUnit(0)<cr>
 nnoremap <F7> :call GetTranslationUnit(1)<cr>
@@ -241,7 +245,7 @@ nnoremap <leader>n :call SignFile()<cr>
 nnoremap <leader><Tab> :call LineLengthCorrect()<cr>
 
 " Backspace fix
-inoremap ^? <bs>
+" inoremap ^? <bs>
 
 " Show current file
 nnoremap <leader>F :call ShowCurrentFile()<cr>
