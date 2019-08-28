@@ -39,10 +39,14 @@ get_host()
     name="$@"
     fname="/etc/issue"
 
-    if grep -i -E '(ubuntu)|(elementary)' ${fname} &> /dev/null; then
+    if grep -i -E '(ubuntu)' ${fname} &> /dev/null; then
         echo -n "ubuntu"
-    elif grep -i mint ${fname} &> /dev/null; then
+    elif grep -i -E '(elementary)' ${fname} &> /dev/null; then
+        echo -n "elementary"
+    elif grep -i -E '(mint)' ${fname} &> /dev/null; then
         echo -n "mint"
+    elif grep -i -E '(debian)' ${fname} &> /dev/null; then
+        echo -n "debian"
     elif grep -i arch ${fname} &> /dev/null; then
         echo -n "arch"
     else
@@ -111,7 +115,7 @@ check_git_user_set
 # First find out which distro is being used
 HOST=$(get_host)
 case ${HOST,,} in
-    ubuntu|mint)
+    ubuntu|elementary|mint|debian)
         distro=debian
         pm=apt
         pm_args="install -y"
@@ -245,17 +249,6 @@ fi
 if [[ ! -h $HOME/.vim/plugin/fswitch.vim ]]; then
     echo "Symlinking vim-fswitch/plugin/fswitch.vim"
     ln -s $(pwd)/vim-fswitch/plugin/fswitch.vim $HOME/.vim/plugin/fswitch.vim
-fi
-#############################################################
-
-########################### Pathogen ########################
-if [[ ! -d "$(pwd)/vim-pathogen" ]]; then
-    echo "Pathogen is missing, cloning ..."
-    git clone https://github.com/tpope/vim-pathogen.git
-fi
-if [[ ! -h $HOME/.vim/autoload/pathogen.vim ]]; then
-    echo "Symlinking vim-pathogen/autoload/pathogen.vim"
-    ln -s $(pwd)/vim-pathogen/autoload/pathogen.vim $HOME/.vim/autoload/pathogen.vim
 fi
 #############################################################
 

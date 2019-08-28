@@ -143,7 +143,6 @@ if len(format) > 1
     endif
 endif
 " And source our ycm script
-execute pathogen#infect()
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
