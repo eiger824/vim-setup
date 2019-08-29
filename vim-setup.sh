@@ -222,11 +222,8 @@ if [[ ! -d "$HOME/.vim/autoload" ]]; then
 fi
 if [[ ! -h $HOME/.vim/autoload/onedark.vim ]]; then
     echo "Symlinking autoload/onedark.vim"
-    ln -s $(pwd)/onedark.vim/autoload/onedark.vim $HOME/.vim/autoload/onedark.vim
+    ln -s $(pwd)/files/onedark-custom-colors.vim $HOME/.vim/autoload/onedark.vim
 fi
-# Substitute our desired values
-sed -e 's/^\(\s\+\\\s\+\"comment_grey\".*\"gui\"\:\s*\"#\)[0-9|A-Z][0-9|A-Z]*\(.*\"cterm\"\:\s*\"\)[0-9][0-9]*\(.*\)/\18A8A8A\2245\3/' -i $HOME/.vim/colors/onedark.vim
-sed -e 's/^\(\s\+\\\s\+\"white\".*\"gui\"\:\s*\"#\)[0-9|A-Z][0-9|A-Z]*\(.*\"cterm\"\:\s*\"\)[0-9][0-9]*\(.*\)/\1EEEEEE\2255\3/' -i $HOME/.vim/colors/onedark.vim
 #############################################################
 
 ######################## FSwitch plugin #####################
