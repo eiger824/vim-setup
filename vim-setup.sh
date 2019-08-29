@@ -59,7 +59,7 @@ check_git_user_set()
 {
 	local name
 	local email
-	if [ ! -d ~/.gitconfig ]; then
+	if [ ! -f ~/.gitconfig ]; then
 		echo -n "Enter your GIT user name: "
 		read name
 		echo -n "Enter your GIT user e-mail: "
