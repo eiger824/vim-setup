@@ -42,7 +42,6 @@ nnoremap E $
 " Append at end
 inoremap <leader>E <esc>GA
 nnoremap <leader>E <esc>GA
-"nnoremap a ^
 nnoremap e $
 
 " Highlight last inserted text
@@ -91,7 +90,8 @@ inoremap ` ``<esc>i
 inoremap `` ``<esc>i
 
 " Add context in newline
-inoremap kk <esc>A<cr>{<cr>}<esc>O
+inoremap kk <esc>A {<cr>}<esc>O
+inoremap kK <esc>A {<cr>};<esc>O
 
 " Quotation marks
 inoremap "" ""<esc>i
