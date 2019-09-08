@@ -1,4 +1,3 @@
-onedark.vim
-vim-fswitch
-vim-pathogen
-vim-surround
+*.c *.h
+test*
+*~

@@ -15,6 +15,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'joshdick/onedark.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'derekwyatt/vim-fswitch'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 
 " Filetype related
@@ -71,6 +72,9 @@ if (empty($TMUX))
          set termguicolors
      endif
 endif
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""" GitGutter """""""""""""""""""""""""""""""
+set updatetime=100
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Use whitespaces
@@ -186,7 +190,7 @@ nnoremap <F5> :FSHere<cr>
 
 nnoremap s :w<cr>
 nnoremap se :wq<cr>
-nnoremap qq :q<cr>
+nnoremap qq :NERDTreeClose<cr>:q<cr>
 nnoremap QQ :q!<cr>
 nnoremap <leader>5 mzgg=G`z
 
@@ -299,7 +303,7 @@ nnoremap <leader>v :so $HOME/.vimrc<cr>
 
 nnoremap <C-F5> :e<cr>:echo "Reloaded!"<cr>
 
-nnoremap <leader>b ggO#!/bin/bash<cr><cr>
+nnoremap <leader>b :buffers<cr>:buffer 
 
 vnoremap <leader>f zf
 vnoremap <leader>u zo

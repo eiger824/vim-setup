@@ -6,6 +6,8 @@
 #
 # Author: Santiago Pagola
 
+source vim-common.src
+
 usage()
 {
     cat << EOF
@@ -19,54 +21,6 @@ OPTIONS:
                         This is the default mode, i.e., by default, everything is installed.
 -t --third-party        Install third party plugins as well.
 EOF
-}
-
-err()
-{
-    echo "$@" >&2
-}
-
-die()
-{
-    err "$@"
-    exit 1
-}
-
-get_host()
-{
-    local name
-    local fname
-    name="$@"
-    fname="/etc/issue"
-
-    if grep -i -E '(ubuntu)' ${fname} &> /dev/null; then
-        echo -n "ubuntu"
-    elif grep -i -E '(elementary)' ${fname} &> /dev/null; then
-        echo -n "elementary"
-    elif grep -i -E '(mint)' ${fname} &> /dev/null; then
-        echo -n "mint"
-    elif grep -i -E '(debian)' ${fname} &> /dev/null; then
-        echo -n "debian"
-    elif grep -i arch ${fname} &> /dev/null; then
-        echo -n "arch"
-    else
-        # TODO: add more options. What about *BSD?
-        echo -n "fedora"
-    fi
-}
-
-check_git_user_set()
-{
-	local name
-	local email
-	if [ ! -f ~/.gitconfig ]; then
-		echo -n "Enter your GIT user name: "
-		read name
-		echo -n "Enter your GIT user e-mail: "
-		read email
-		git config --global user.name $name
-		git config --global user.email $email
-	fi
 }
 
 # Parse options
