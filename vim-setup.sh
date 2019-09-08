@@ -198,6 +198,12 @@ if [ ${thirdparty} -eq 0 ]; then
     echo -e "\nDone"
     exit 0
 fi
+
+# Before moving on to the 3rd party stuff, we need to temporarily
+# disable the colorscheme onedark since it will be installed
+# by Vundle the first time:
+sed -i -e 's/^colorscheme/"colorscheme/g' ${HOME}/.vimrc
+
 ###########################################################
 ####################### 3rd party stuff ###################
 ###########################################################
@@ -214,6 +220,8 @@ test -d ~/.vim/bundle/Vundle.vim ||
     case $ans in
         [yY]|[yY][eE][sS]|"")
             vim +PluginInstall +qall
+            # And restore the right colorscheme
+            sed -i -e 's/^"colorscheme/colorscheme/g' ${HOME}/.vimrc
             ;;
         *)
             echo "Skipping install. You can install plugins with :PluginInstall from inside vim."
