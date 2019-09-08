@@ -1,15 +1,79 @@
 " Vundle related
 set nocompatible
-filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " Plugin list
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
+" Plugin 'dense-analysis/ale'
+" Plugin 'vim-syntastic/syntastic'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'itchyny/lightline.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'joshdick/onedark.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'derekwyatt/vim-fswitch'
 call vundle#end()
-filetype plugin indent on
 
+" Filetype related
+filetype plugin indent on
+filetype indent on
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""" ALE """"""""""""""""""""""""""""""""
+" let g:ale_linters = {'c' : ['gcc', 'clang', 'flawfinder', 'clangd']}
+" let g:ale_fix_on_save=1
+" let g:ale_completion_enabled=1
+" let g:ale_fixers = {
+" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+" \}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""" SYNTASTIC GCC C COMPILER, SEE OTHER FLAGS """""""""""""
+" let g:syntastic_c_compiler=1
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""" FZF Plugin """"""""""""""""""""""""""""
+nnoremap ; :Files<cr>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""" LIGHTLINE Plugin """"""""""""""""""""""""
+set laststatus=2
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""" NERDTree """"""""""""""""""""""""""""
+nnoremap <C-O> :NERDTreeToggle<cr>
+let NERDTreeShowHidden=1
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""" Onedark """""""""""""""""""""""""""""""
+colorscheme onedark
+syntax on
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+     if (has("nvim"))
+        "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+         let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+     endif
+    "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+    "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+    " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+    if (has("termguicolors"))
+         set termguicolors
+     endif
+endif
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Use whitespaces
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -19,7 +83,6 @@ set showcmd
 set number
 set cursorline
 
-filetype indent on
 set wildmenu
 
 set lazyredraw
@@ -105,11 +168,11 @@ inoremap nN \n
 inoremap tT \t
 
 " Some language-related tricks: C++
-inoremap <C-C> cout << 
-inoremap <C-O> cerr << 
+inoremap <C-C> cout <<
+inoremap <C-O> cerr <<
 inoremap <C-E> <esc>A << endl;
 " C/C++
-inoremap <leader># #include 
+inoremap <leader># #include
 inoremap <leader>D #define
 inoremap <leader>N <esc>:call InitHeader()<cr>
 
@@ -119,7 +182,7 @@ inoremap <leader><leader> <esc>A
 
 " File-Switch (FS) mappings
 nnoremap <F5> :FSHere<cr>
-nnoremap <C-o> :call EditOnCurrentDir()<cr>
+" nnoremap <C-o> :call EditOnCurrentDir()<cr>
 
 nnoremap s :w<cr>
 nnoremap se :wq<cr>
@@ -145,35 +208,11 @@ endif
 " And source our ycm script
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
-    if (has("nvim"))
-        "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-    endif
-    "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-    "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-    " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-    if (has("termguicolors"))
-        set termguicolors
-    endif
-endif
-
-"Apply onedark coloring
-colorscheme onedark
-syntax on
-" Apply monokai
-" colorscheme molokai
-" let g:molokai_original = 1
-" let g:rehash256 = 1
-
 nnoremap <F6> :call GetTranslationUnit(0)<cr>
 nnoremap <F7> :call GetTranslationUnit(1)<cr>
 
 " Comments: add new block comment
-inoremap <C-A> /*<cr><cr>/<cr><esc>kkA 
+inoremap <C-A> /*<cr><cr>/<cr><esc>kkA
 nnoremap <C-C> :call BlockCommentInteractive()<cr>
 vnoremap <C-C> :call VisualBlockComment()<cr>
 nnoremap <C-U> :call BlockUncomment()<cr>
@@ -220,7 +259,7 @@ nnoremap <C-k> <C-w><Up>
 nnoremap <C-h> <C-w><Left>
 
 nnoremap <leader>' ciw'<C-r>"'<esc>
-nnoremap <leader><leader>' bdwhPlxx 
+nnoremap <leader><leader>' bdwhPlxx
 nnoremap <leader>2 ciw"<C-r>""<esc>
 nnoremap <leader><leader>2 bdwhPlxx
 nnoremap <leader>7 ciw{<C-r>"}<esc>
@@ -266,3 +305,12 @@ vnoremap <leader>f zf
 vnoremap <leader>u zo
 vnoremap <leader>k :call ContextBlock()<cr>
 
+if has("gui_running")
+  if has("gui_gtk3")
+      set guifont=Inconsolata\ 14
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h14
+  elseif has("gui_win32")
+    set guifont=Consolas:h11:cANSI
+  endif
+endif

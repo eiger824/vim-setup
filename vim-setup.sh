@@ -12,12 +12,12 @@ usage()
 USAGE: $(basename $0) [OPTIONS]
 
 OPTIONS:
--h --help           Print this help and exit.
--o --only-plugins   Only plugins, i.e., no third party stuff is installed (i.e.) no
-                    color schemes, no autocorrect.
--s --show           Show only information about current distro and packages to install
-                    This is the default mode, i.e., by default, everything is installed.
--t --third-party    Install third party plugins as well.
+-h --help               Print this help and exit.
+-o --only-own-plugins   Only own-defined plugins, i.e., no third party stuff is installed (i.e.)
+                        no color schemes, no autocorrect.
+-s --show               Show only information about current distro and packages to install
+                        This is the default mode, i.e., by default, everything is installed.
+-t --third-party        Install third party plugins as well.
 EOF
 }
 
@@ -73,7 +73,7 @@ check_git_user_set()
 showonly=0
 thirdparty=1
 shortopts="host"
-longopts="--long help --long only-plugins --long show --long third-party"
+longopts="--long help --long only-own-plugins --long show --long third-party"
 options=$(getopt -o ${shortopts} ${longopts} -- "$@")
 [ $? -eq 0 ] ||
 {
@@ -87,7 +87,7 @@ while true; do
             usage
             exit 0
             ;;
-        -o|--only-plugins)
+        -o|--only-own-plugins)
             thirdparty=0
             ;;
         -s|--show)
@@ -202,69 +202,7 @@ fi
 ####################### 3rd party stuff ###################
 ###########################################################
 
-###################### Onedark theme ######################
-if [[ ! -d "$(pwd)/onedark.vim" ]]; then
-    echo Onedark is missing, cloning ...
-    git clone https://github.com/joshdick/onedark.vim.git
-fi
-if [[ ! -d "$HOME/.vim/colors" ]]; then
-    echo "Creating $HOME/.vim/colors directory"
-    mkdir $HOME/.vim/colors
-fi
-if [[ ! -f $HOME/.vim/colors/onedark.vim ]]; then
-    echo "Symlinking colors/onedark.vim"
-    ln -s $(pwd)/onedark.vim/colors/onedark.vim $HOME/.vim/colors/onedark.vim
-fi
-
-if [[ ! -d "$HOME/.vim/autoload" ]]; then
-    echo "Creating $HOME/.vim/autoload directory"
-    mkdir $HOME/.vim/autoload
-fi
-if [[ ! -h $HOME/.vim/autoload/onedark.vim ]]; then
-    echo "Symlinking autoload/onedark.vim"
-    ln -s $(pwd)/files/onedark-custom-colors.vim $HOME/.vim/autoload/onedark.vim
-fi
-#############################################################
-
-######################## FSwitch plugin #####################
-if [[ ! -d "$(pwd)/vim-fswitch" ]]; then
-    echo FSwitch is missing, cloning ...
-    git clone https://github.com/derekwyatt/vim-fswitch.git
-    echo "Applying custom patch ..."
-    cd vim-fswitch
-    git am ../patches/0001-cc-h-fswitch.patch
-    cd ..
-fi
-if [[ ! -d "$HOME/.vim/doc" ]]; then
-    echo "Creating $HOME/.vim/doc directory"
-    mkdir $HOME/.vim/doc
-fi
-if [[ ! -h $HOME/.vim/doc/fswitch.txt ]]; then
-    echo "Symlinking vim-fswitch/doc/fswitch.txt"
-    ln -s $(pwd)/vim-fswitch/doc/fswitch.txt $HOME/.vim/doc/fswitch.txt
-fi
-if [[ ! -h $HOME/.vim/plugin/fswitch.vim ]]; then
-    echo "Symlinking vim-fswitch/plugin/fswitch.vim"
-    ln -s $(pwd)/vim-fswitch/plugin/fswitch.vim $HOME/.vim/plugin/fswitch.vim
-fi
-#############################################################
-
-####################### vim-surround ########################
-if [[ ! -d "$(pwd)/vim-surround" ]]; then
-    echo "vim-surround is missing, cloning ..."
-    git clone https://github.com/tpope/vim-surround.git
-fi
-if [[ ! -h $HOME/.vim/doc/surround.txt ]]; then
-    echo "Symlinking vim-surround documentation file"
-    ln -s $(pwd)/vim-surround/doc/surround.txt $HOME/.vim/doc/surround.txt
-fi
-if [[ ! -h $HOME/.vim/plugin/surround.vim ]]; then
-    echo "Symlinking vim-surround/plugin/surround.vim"
-    ln -s $(pwd)/vim-surround/plugin/surround.vim $HOME/.vim/plugin/surround.vim
-fi
-#############################################################
-
-###################### YouCompleteMe ########################
+########################## VUNDLE ###########################
 # Set up VUNDLE
 test -d ~/.vim/bundle/Vundle.vim ||
 {
@@ -276,10 +214,6 @@ test -d ~/.vim/bundle/Vundle.vim ||
     case $ans in
         [yY]|[yY][eE][sS]|"")
             vim +PluginInstall +qall
-            echo "Download completed. Building now!"
-            pushd ~/.vim/bundle/YouCompleteMe
-            ./install.py --clang-completer
-            popd
             ;;
         *)
             echo "Skipping install. You can install plugins with :PluginInstall from inside vim."
@@ -287,6 +221,15 @@ test -d ~/.vim/bundle/Vundle.vim ||
 
     esac
 }
+#############################################################
+
+###################### YouCompleteMe ########################
+# Set up VUNDLE
+echo "Download completed. Building now!"
+pushd ~/.vim/bundle/YouCompleteMe
+./install.py --clang-completer
+popd
+
 # YouCompleteMe source scripts
 if [[ ! -f $HOME/.vim/.ycm_c_autocomp.py ]]; then
     echo "Copying YCM C autocompletion source script"
@@ -297,6 +240,7 @@ if [[ ! -f $HOME/.vim/.ycm_c++_autocomp.py ]]; then
     cp .ycm_c++_autocomp.py $HOME/.vim
 fi
 #############################################################
+
 ret=$?
 echo -e "\nDone."
 exit ${ret}
