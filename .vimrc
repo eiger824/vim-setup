@@ -16,6 +16,7 @@ Plugin 'joshdick/onedark.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'rafi/awesome-vim-colorschemes'
 call vundle#end()
 
 " Filetype related
@@ -55,7 +56,7 @@ let NERDTreeShowHidden=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""" Onedark """""""""""""""""""""""""""""""
-colorscheme onedark
+colorscheme space-vim-dark
 syntax on
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
