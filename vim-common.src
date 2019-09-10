@@ -37,6 +37,22 @@ get_host()
     fi
 }
 
+get_package_manager()
+{
+    local host
+    host=$(get_host)
+    case ${host,,} in
+        ubuntu|elementary|mint|debian)
+            echo -n "apt"
+            ;;
+        arch)
+            echo -n "pacman" 
+            ;;
+        fedora|redhat|rhl|centos)
+            echo -n "yum";
+    esac
+}
+
 check_git_user_set()
 {
 	local name
@@ -49,4 +65,30 @@ check_git_user_set()
 		git config --global user.name $name
 		git config --global user.email $email
 	fi
+}
+
+check_if_su_allowed()
+{
+    local user
+    local pm
+    user=$(whoami)
+    pm=$(get_package_manager)
+
+    # Possible scenarios with executing commands as root:
+    #
+    # 1. sudo -v - updating sudo timestamp
+    #    it can happen that the user is not even allowed to do this
+    # In case [1] goes Ok:
+    # 2. sudo -l : listing which commands the user is allowed to
+    #    run as root
+    if ! sudo -v &> /dev/null; then
+        return 1
+    else
+        if sudo -l 2>&1 | grep ALL &> /dev/null; then
+            return 0
+        elif sudo -l 2>&1 | grep ${pm} &> /dev/null; then
+            return 0
+        fi
+        return 2
+    fi
 }

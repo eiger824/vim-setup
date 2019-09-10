@@ -94,21 +94,26 @@ echo "Current distro: ${distro} (${HOST})"
 
 # Just print some info if -s was provided
 if [ ${showonly} -eq 1 ]; then
-    cat << EOF
-The following dependencies will be installed:
-
-$ ${pm} ${pm_args} ${pkgs} vim
-EOF
+    if check_if_su_allowed; then
+        echo "The following dependencies will be installed :$ ${pm} ${pm_args} ${pkgs} vim"
+    else
+        echo "No external dependencies will be installed since user \`$(whoami)' is not allowed to run the package manager on this system"
+    fi
     exit 0
 fi
 
-# Find out if vim installed. Usually, vim should be in /usr/bin/vim
-echo "Installing dependencies first"
-sudo ${pm} ${pm_args} ${pkgs}
+if check_if_su_allowed; then
+    # Find out if vim installed. Usually, vim should be in /usr/bin/vim
+    echo "Installing dependencies first"
+    sudo ${pm} ${pm_args} ${pkgs}
 
-if [[ ! -f /usr/bin/vim ]]; then
-    echo "Going to install vim!"
-    sudo ${pm} ${pm_args} vim
+    if [[ ! -f /usr/bin/vim ]]; then
+        echo "Going to install vim!"
+        sudo ${pm} ${pm_args} vim
+    fi
+
+else
+    echo "User is NOT allowed to download packages. Proceed with care."
 fi
 
 # Next, copy our favorite .vimrc. Don't just override if existing .vimrc
