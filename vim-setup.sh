@@ -15,6 +15,7 @@ USAGE: $(basename $0) [OPTIONS]
 
 OPTIONS:
 -h --help               Print this help and exit.
+-c --check-privileges   Only check whether the current user has root privileges to install packages
 -o --only-own-plugins   Only own-defined plugins, i.e., no third party stuff is installed (i.e.)
                         no color schemes, no autocorrect.
 -s --show               Show only information about current distro and packages to install
@@ -24,10 +25,11 @@ EOF
 }
 
 # Parse options
+checkonly=0
 showonly=0
 thirdparty=1
-shortopts="host"
-longopts="--long help --long only-own-plugins --long show --long third-party"
+shortopts="hcost"
+longopts="--long help --long check-privileges --long only-own-plugins --long show --long third-party"
 options=$(getopt -o ${shortopts} ${longopts} -- "$@")
 [ $? -eq 0 ] ||
 {
@@ -40,6 +42,9 @@ while true; do
         -h|--help)
             usage
             exit 0
+            ;;
+        -c|--check-privileges)
+            checkonly=1
             ;;
         -o|--only-own-plugins)
             thirdparty=0
@@ -62,6 +67,15 @@ if [[ `basename $(pwd)` != "vim-setup" ]]
 then
     echo "Run this script from root directory"
     exit 1
+fi
+
+if [ ${checkonly} -eq 1 ]; then
+    if check_if_su_allowed; then
+        echo "User \`$USER' is allowed to install system packages."
+    else
+        echo "User \`$USER' is NOT allowed to install system packages."
+    fi
+    exit 0
 fi
 
 check_git_user_set
