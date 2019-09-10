@@ -164,8 +164,7 @@ sed -i -e 's/^colorscheme/"colorscheme/g' ${HOME}/.vimrc
 
 ########################## VUNDLE ###########################
 # Set up VUNDLE
-test -d ~/.vim/bundle/Vundle.vim ||
-{
+if [[ -d ~/.vim/bundle/Vundle.vim ]]; then
     mkdir -p ~/.vim/bundle/Vundle.vim
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     # Install YCM
@@ -182,7 +181,10 @@ test -d ~/.vim/bundle/Vundle.vim ||
             ;;
 
     esac
-}
+else
+    echo "Installing new plugins"
+    vim +PluginInstall +qall
+fi
 #############################################################
 
 ###################### YouCompleteMe ########################
