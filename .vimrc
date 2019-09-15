@@ -21,14 +21,10 @@ call vundle#end()
 filetype plugin indent on
 filetype indent on
 
-"""""""""""""""""""""""""""""" FZF Plugin """"""""""""""""""""""""""""
-nnoremap ; :Files<cr>
-
 """""""""""""""""""""""""""" LIGHTLINE Plugin """"""""""""""""""""""""
 set laststatus=2
 
 """""""""""""""""""""""""""""""" NERDTree """"""""""""""""""""""""""""
-nnoremap <leader>o :NERDTreeToggle<cr>
 let NERDTreeShowHidden=1
 
 """"""""""""""""""""""""""""" vim color"""""""""""""""""""""""""""""""
@@ -51,14 +47,10 @@ if (empty($TMUX))
 endif
 
 """""""""""""""""""""""""""" GitGutter """""""""""""""""""""""""""""""
-nnoremap <leader><Right> :GitGutterNextHunk<cr>
-nnoremap <leader><Left> :GitGutterPrevHunk<cr>
 set updatetime=100
 
 
 """"""""""""""""""""""""""" YouCompleteMe """"""""""""""""""""""""""""
-" Explore word under cursor
-nnoremap <leader>f :YcmCompleter GoTo<cr>
 
 " Use whitespaces
 set tabstop=4
@@ -80,102 +72,10 @@ set hlsearch
 
 let mapleader=","
 
-nnoremap <leader><space> :nohlsearch<CR>
-
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=manual
-
-"nnoremap A ^
-nnoremap E $
-" Append at end
-inoremap <leader>E <esc>GA
-nnoremap <leader>E <esc>GA
-nnoremap e $
-
-" Highlight last inserted text
-nnoremap gV `[v`]
-
-nnoremap DD :1,$d<cr>
-
-" For the very lazy ass: mini-prototype of main() and classic includes
-inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr>return 0;<cr>}<cr><esc>3ki<tab>
-inoremap iB #include <stdio.h>
-
-" Jump some lines
-nnoremap <leader>j 30j
-nnoremap <leader>k 30k
-nnoremap <leader>l 30l
-nnoremap <leader>h 30h
-
-" Indent current line
-nnoremap z =$;
-" Escape mapping - super useful!
-inoremap jk <esc>ma0=$`a
-
-" Escape next closing )]}
-inoremap ii <esc>2li
-inoremap uu <esc>i
-" Parentheses
-inoremap jj ()<esc>i
-inoremap jJ ();<esc>hi
-inoremap ( ()<esc>i
-inoremap () ()<esc>i
-
-" Square brackets
-inoremap hh []<esc>i
-inoremap hH [];<esc>hi
-inoremap [ []<esc>i
-inoremap [] []<esc>i
-
-" Curly braces
-inoremap <leader>g {}<esc>i
-inoremap <leader>G {};<esc>hi
-inoremap { {}<esc>i
-inoremap {} {}<esc>i
-
-" Backtick
-inoremap ` ``<esc>i
-inoremap `` ``<esc>i
-
-" Add context in newline
-inoremap kk <esc>A {<cr>}<esc>O
-inoremap kK <esc>A {<cr>};<esc>O
-
-" Quotation marks
-inoremap "" ""<esc>i
-inoremap cC ""<esc>i
-inoremap '' ''<esc>i
-" close < and >
-inoremap <z <><esc>i
-inoremap <> <><esc>i
-
-inoremap nN \n
-inoremap tT \t
-
-" Some language-related tricks: C++
-" C/C++
-inoremap <leader># #include
-inoremap <leader>D #define
-inoremap <leader>N <esc>:call InitHeader()<cr>
-
-" The very best: eE will move the cursor to the end
-" iif both previous and next chars are non-space
-inoremap <leader><leader> <esc>A
-
-" File-Switch (FS) mappings
-nnoremap <F5> :FSHere<cr>
-nnoremap <leader>e :call EditOnCurrentDir()<cr>
-
-nnoremap s :w<cr>
-nnoremap se :wq<cr>
-nnoremap qq :NERDTreeClose<cr>:q<cr>
-nnoremap QQ :q!<cr>
-nnoremap <leader>5 mzgg=G`z
-
-nnoremap <leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-nnoremap <leader>a <esc>ggvG
 
 "Source right autocomplete script depending on the language
 let format = split(expand('%:t'), '\.')
@@ -192,45 +92,90 @@ endif
 " And source our ycm script
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
-nnoremap <F6> :call GetTranslationUnit(0)<cr>
-nnoremap <F7> :call GetTranslationUnit(1)<cr>
+if has("gui_running")
+  if has("gui_gtk3")
+      set guifont=Inconsolata\ 14
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h14
+  elseif has("gui_win32")
+    set guifont=Consolas:h11:cANSI
+  endif
+endif
 
-" Comments: add new block comment
-inoremap <C-A> /*<cr><cr>/<cr><esc>kkA
-nnoremap <C-C> :call BlockCommentInteractive()<cr>
-vnoremap <C-C> :call VisualBlockComment()<cr>
-nnoremap <C-U> :call BlockUncomment()<cr>
-
-" Comment current line
+" KEYMAPS
+" Insert mode keymaps
+inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr>return 0;<cr>}<cr><esc>3ki<tab>
+inoremap iB #include <stdio.h>
+inoremap jk <esc>ma0=$`a
+inoremap ii <esc>2li
+inoremap uu <esc>i
+inoremap jj ()<esc>i
+inoremap jJ ();<esc>hi
+inoremap ( ()<esc>i
+inoremap () ()<esc>i
+inoremap hh []<esc>i
+inoremap hH [];<esc>hi
+inoremap [ []<esc>i
+inoremap [] []<esc>i
+inoremap kk <esc>A {<cr>}<esc>O
+inoremap kK <esc>A {<cr>};<esc>O
+inoremap { {}<esc>i
+inoremap {} {}<esc>i
+inoremap <leader>g {}<esc>i
+inoremap <leader>G {};<esc>hi
+inoremap ` ``<esc>i
+inoremap `` ``<esc>i
+inoremap "" ""<esc>i
+inoremap cC ""<esc>i
+inoremap '' ''<esc>i
+inoremap <z <><esc>i
+inoremap <> <><esc>i
+inoremap nN \n
+inoremap tT \t
+inoremap <leader># #include 
+inoremap <leader>D #define 
+inoremap <leader>N <esc>:call InitHeader()<cr>
+inoremap <leader><leader> <esc>A
 inoremap <leader>c <esc>:call ToggleLineComment()<cr>A
-nnoremap <leader>c :call ToggleLineComment()<cr>
 inoremap <leader>C <esc>:call ToggleBlockLineComment(0)<cr>A
-
-vnoremap <leader>C :call VisualToggleBlockLineCommentRuntime()<cr>
-
-nnoremap <leader>C :call ToggleBlockLineComment(0)<cr>
 inoremap <leader>. <esc>:call ToggleBlockLineCommentRuntime()<cr>$hhi
-
-" Turn on/off line mode
-nnoremap <leader>N :setlocal number!<cr>
-" Remove trailing whitespaces
-nnoremap <leader>w :%s/\s/ /g<cr>:%s/\s\+$//g<cr>
-
-nnoremap <leader>d :call Documentify()<cr>dd
-
-" Switch to previous buffer
-nnoremap <space> :b#<cr>
-
-" Makefile variables
 inoremap <leader>b ${}<esc>i
-" New bash command
 inoremap <leader>n $()<esc>i
 
-" Exec command
-nnoremap <leader>m :w<cr>:call CommandExec()<cr>
-" Autohighlight remap
+" Normal mode keymaps
+nnoremap ; :Files<cr>
+nnoremap <leader>o :NERDTreeToggle<cr>
+nnoremap <leader><Right> :GitGutterNextHunk<cr>
+nnoremap <leader><Left> :GitGutterPrevHunk<cr>
+nnoremap <leader>F :YcmCompleter GoTo<cr>
+nnoremap <leader><space> :nohlsearch<CR>
+nnoremap e $
+nnoremap DD :1,$d<cr>
+nnoremap <leader>j 30j
+nnoremap <leader>k 30k
+nnoremap <leader>l 30l
+nnoremap <leader>h 30h
+nnoremap z =$;
+nnoremap <F5> :FSHere<cr>
+nnoremap <leader>e :call EditOnCurrentDir()<cr>
+nnoremap s :w<cr>
+nnoremap se :wq<cr>
+nnoremap qq :NERDTreeClose<cr>:q<cr>
+nnoremap QQ :q!<cr>
+nnoremap <leader>5 mzgg=G`z
+nnoremap <leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+nnoremap <leader>a <esc>ggvG
+nnoremap <F6> :call GetTranslationUnit(0)<cr>
+nnoremap <F7> :call GetTranslationUnit(1)<cr>
+nnoremap <C-C> :call BlockCommentInteractive()<cr>
+nnoremap <C-U> :call BlockUncomment()<cr>
+nnoremap <leader>c :call ToggleLineComment()<cr>
+nnoremap <leader>C :call ToggleBlockLineComment(0)<cr>
+nnoremap <leader>N :setlocal number!<cr>
+nnoremap <leader>w :%s/\s/ /g<cr>:%s/\s\+$//g<cr>
+nnoremap <leader>d :call Documentify()<cr>dd
+nnoremap <space> :b#<cr>
 nnoremap <leader><leader> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
-
 nnoremap <C-w>h <C-w>s
 nnoremap <C-n> <C-w>v
 nnoremap <C-m> <C-w>s
@@ -238,7 +183,6 @@ nnoremap <C-l> <C-w><Right>
 nnoremap <C-j> <C-w><Down>
 nnoremap <C-k> <C-w><Up>
 nnoremap <C-h> <C-w><Left>
-
 nnoremap <leader>' ciw'<C-r>"'<esc>
 nnoremap <leader><leader>' bdwhPlxx
 nnoremap <leader>2 ciw"<C-r>""<esc>
@@ -249,7 +193,18 @@ nnoremap <leader>8 ciw(<C-r>")<esc>
 nnoremap <leader><leader>8 bdwhPlxx
 nnoremap <leader>9 ciw[<C-r>"]<esc>
 nnoremap <leader><leader>9 bdwhPlxx
+nnoremap <leader>n :call SignFile()<cr>
+nnoremap <leader><Tab> :call LineLengthCorrect()<cr>
+nnoremap ga `a
+nnoremap gb `b
+nnoremap gc `c
+nnoremap gd `d
+nnoremap <leader>v :so $HOME/.vimrc<cr>
+nnoremap <leader>b :buffers<cr>:buffer 
 
+" Visual mode keymaps
+vnoremap <C-C> :call VisualBlockComment()<cr>
+vnoremap <leader>C :call VisualToggleBlockLineCommentRuntime()<cr>
 vnoremap <leader>' di'<esc>pli'<esc>
 vnoremap <leader><leader>' d2hPlxx
 vnoremap <leader>2 di"<esc>pli"<esc>
@@ -260,35 +215,6 @@ vnoremap <leader>8 di(<esc>pli)<esc>
 vnoremap <leader><leader>8 d2hPlxx
 vnoremap <leader>9 di[<esc>pli]<esc>
 vnoremap <leader><leader>9 d2hPlxx
-
-nnoremap <leader>n :call SignFile()<cr>
-nnoremap <leader><Tab> :call LineLengthCorrect()<cr>
-
-" Show current file
-nnoremap <leader>F :call ShowCurrentFile()<cr>
-
-" Set mark / get to some marks
-nnoremap ga `a
-nnoremap gb `b
-nnoremap gc `c
-nnoremap gd `d
-
-nnoremap <leader>v :so $HOME/.vimrc<cr>
-
-nnoremap <C-F5> :e<cr>:echo "Reloaded!"<cr>
-
-nnoremap <leader>b :buffers<cr>:buffer 
-
 vnoremap <leader>f zf
 vnoremap <leader>u zo
 vnoremap <leader>k :call ContextBlock()<cr>
-
-if has("gui_running")
-  if has("gui_gtk3")
-      set guifont=Inconsolata\ 14
-  elseif has("gui_macvim")
-    set guifont=Menlo\ Regular:h14
-  elseif has("gui_win32")
-    set guifont=Consolas:h11:cANSI
-  endif
-endif
