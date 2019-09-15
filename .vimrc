@@ -6,8 +6,6 @@ call vundle#begin()
 " Plugin list
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'dense-analysis/ale'
-" Plugin 'vim-syntastic/syntastic'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'itchyny/lightline.vim'
@@ -23,60 +21,44 @@ call vundle#end()
 filetype plugin indent on
 filetype indent on
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""" ALE """"""""""""""""""""""""""""""""
-" let g:ale_linters = {'c' : ['gcc', 'clang', 'flawfinder', 'clangd']}
-" let g:ale_fix_on_save=1
-" let g:ale_completion_enabled=1
-" let g:ale_fixers = {
-" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-" \}
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""" SYNTASTIC GCC C COMPILER, SEE OTHER FLAGS """""""""""""
-" let g:syntastic_c_compiler=1
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""" FZF Plugin """"""""""""""""""""""""""""
 nnoremap ; :Files<cr>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""" LIGHTLINE Plugin """"""""""""""""""""""""
 set laststatus=2
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""" NERDTree """"""""""""""""""""""""""""
-nnoremap <C-O> :NERDTreeToggle<cr>
+nnoremap <leader>o :NERDTreeToggle<cr>
 let NERDTreeShowHidden=1
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""" Onedark """""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""" vim color"""""""""""""""""""""""""""""""
 colorscheme space-vim-dark
 syntax on
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
 if (empty($TMUX))
-     if (has("nvim"))
-        "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-         let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-     endif
+    if (has("nvim"))
+        " For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    endif
     "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
     "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
     " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
     if (has("termguicolors"))
-         set termguicolors
-     endif
+        set termguicolors
+    endif
 endif
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 """""""""""""""""""""""""""" GitGutter """""""""""""""""""""""""""""""
+nnoremap <leader><Right> :GitGutterNextHunk<cr>
+nnoremap <leader><Left> :GitGutterPrevHunk<cr>
 set updatetime=100
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+""""""""""""""""""""""""""" YouCompleteMe """"""""""""""""""""""""""""
+" Explore word under cursor
+nnoremap <leader>f :YcmCompleter GoTo<cr>
 
 " Use whitespaces
 set tabstop=4
@@ -173,9 +155,6 @@ inoremap nN \n
 inoremap tT \t
 
 " Some language-related tricks: C++
-inoremap <C-C> cout <<
-inoremap <C-O> cerr <<
-inoremap <C-E> <esc>A << endl;
 " C/C++
 inoremap <leader># #include
 inoremap <leader>D #define
@@ -187,7 +166,7 @@ inoremap <leader><leader> <esc>A
 
 " File-Switch (FS) mappings
 nnoremap <F5> :FSHere<cr>
-" nnoremap <C-o> :call EditOnCurrentDir()<cr>
+nnoremap <leader>e :call EditOnCurrentDir()<cr>
 
 nnoremap s :w<cr>
 nnoremap se :wq<cr>
@@ -237,9 +216,6 @@ nnoremap <leader>N :setlocal number!<cr>
 " Remove trailing whitespaces
 nnoremap <leader>w :%s/\s/ /g<cr>:%s/\s\+$//g<cr>
 
-" Explore word under cursor
-nnoremap <leader>f :call ExploreSymbolUnderCursor()<cr>
-nnoremap <leader>e :call EnhancedSymbolSearch()<cr>
 nnoremap <leader>d :call Documentify()<cr>dd
 
 " Switch to previous buffer
@@ -287,9 +263,6 @@ vnoremap <leader><leader>9 d2hPlxx
 
 nnoremap <leader>n :call SignFile()<cr>
 nnoremap <leader><Tab> :call LineLengthCorrect()<cr>
-
-" Backspace fix
-" inoremap ^? <bs>
 
 " Show current file
 nnoremap <leader>F :call ShowCurrentFile()<cr>
