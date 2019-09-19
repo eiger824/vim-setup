@@ -28,7 +28,7 @@ set laststatus=2
 let NERDTreeShowHidden=1
 
 """"""""""""""""""""""""""""" vim color"""""""""""""""""""""""""""""""
-colorscheme space-vim-dark
+colorscheme one-dark
 syntax on
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -157,7 +157,6 @@ nnoremap <leader>l 30l
 nnoremap <leader>h 30h
 nnoremap z =$;
 nnoremap <F5> :FSHere<cr>
-nnoremap <leader>e :call EditOnCurrentDir()<cr>
 nnoremap s :w<cr>
 nnoremap se :wq<cr>
 nnoremap qq :NERDTreeClose<cr>:q<cr>
@@ -201,6 +200,7 @@ nnoremap gc `c
 nnoremap gd `d
 nnoremap <leader>v :so $HOME/.vimrc<cr>
 nnoremap <leader>b :buffers<cr>:buffer 
+nnoremap <C-o> :call EditOnCurrentDir()<cr>
 
 " Visual mode keymaps
 vnoremap <C-C> :call VisualBlockComment()<cr>
