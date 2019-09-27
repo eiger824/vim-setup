@@ -15,6 +15,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rafi/awesome-vim-colorschemes'
+Plugin 'mihaifm/bufstop'
 call vundle#end()
 
 " Filetype related
@@ -28,7 +29,8 @@ set laststatus=2
 let NERDTreeShowHidden=1
 
 """"""""""""""""""""""""""""" vim color"""""""""""""""""""""""""""""""
-colorscheme one-dark
+colorscheme wombat256mod
+" colorscheme rdark-terminal2
 syntax on
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -102,11 +104,14 @@ if has("gui_running")
   endif
 endif
 
+" Function parameter indentation
+set cinoptions=:0,l1,t0,g0,(0
+
 " KEYMAPS
 " Insert mode keymaps
 inoremap mF int main(int argc, char* argv[])<cr>{<cr><cr>return 0;<cr>}<cr><esc>3ki<tab>
 inoremap iB #include <stdio.h>
-inoremap jk <esc>ma0=$`a
+inoremap jk <esc>:w<cr>
 inoremap ii <esc>2li
 inoremap uu <esc>i
 inoremap jj ()<esc>i
@@ -117,8 +122,8 @@ inoremap hh []<esc>i
 inoremap hH [];<esc>hi
 inoremap [ []<esc>i
 inoremap [] []<esc>i
-inoremap kk <esc>A {<cr>}<esc>O
-inoremap kK <esc>A {<cr>};<esc>O
+inoremap kk <esc>A<cr>{<cr>}<esc>O
+inoremap kK <esc>A<cr>{<cr>};<esc>O
 inoremap { {}<esc>i
 inoremap {} {}<esc>i
 inoremap <leader>g {}<esc>i
@@ -143,6 +148,7 @@ inoremap <leader>b ${}<esc>i
 inoremap <leader>n $()<esc>i
 
 " Normal mode keymaps
+nnoremap S :w<cr>
 nnoremap ; :Files<cr>
 nnoremap <leader>o :NERDTreeToggle<cr>
 nnoremap <leader><Right> :GitGutterNextHunk<cr>
@@ -157,9 +163,9 @@ nnoremap <leader>l 30l
 nnoremap <leader>h 30h
 nnoremap z =$;
 nnoremap <F5> :FSHere<cr>
-nnoremap s :w<cr>
+nnoremap s <NOP>
 nnoremap se :wq<cr>
-nnoremap qq :NERDTreeClose<cr>:q<cr>
+nnoremap qq :q<cr>
 nnoremap QQ :q!<cr>
 nnoremap <leader>5 mzgg=G`z
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
@@ -199,7 +205,9 @@ nnoremap gb `b
 nnoremap gc `c
 nnoremap gd `d
 nnoremap <leader>v :so $HOME/.vimrc<cr>
-nnoremap <leader>b :buffers<cr>:buffer 
+" nnoremap <leader>b :buffers<cr>:buffer
+nnoremap <leader>b :BufstopFast<cr>
+nnoremap <leader>B :bd
 nnoremap <C-o> :call EditOnCurrentDir()<cr>
 
 " Visual mode keymaps
