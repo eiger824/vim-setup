@@ -16,6 +16,7 @@ Plugin 'derekwyatt/vim-fswitch'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rafi/awesome-vim-colorschemes'
 Plugin 'mihaifm/bufstop'
+Plugin 'mtdl9/vim-log-highlighting'
 call vundle#end()
 
 " Filetype related
