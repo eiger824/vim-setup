@@ -155,6 +155,9 @@ nnoremap <leader>o :NERDTreeToggle<cr>
 nnoremap <leader><Right> :GitGutterNextHunk<cr>
 nnoremap <leader><Left> :GitGutterPrevHunk<cr>
 nnoremap <leader>F :YcmCompleter GoTo<cr>
+" Note: to use this keymap, a "tags" file must be present in the top
+" directory, this can be generated with `ctags -R .'
+nnoremap <leader>t :tag <C-r><C-w><cr>
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap e $
 nnoremap DD :1,$d<cr>
