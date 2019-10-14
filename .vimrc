@@ -1,7 +1,7 @@
 " Vundle related
 set nocompatible
 
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.local/share/nvim/bundle/Vundle.vim
 call vundle#begin()
 " Plugin list
 Plugin 'VundleVim/Vundle.vim'
@@ -52,7 +52,13 @@ endif
 
 """""""""""""""""""""""""""" GitGutter """""""""""""""""""""""""""""""
 set updatetime=100
-
+set signcolumn=yes
+let g:gitgutter_override_sign_column_highlight = 0
+highlight SignColumn ctermbg=234 " terminal Vim
+highlight SignColumn guibg=#e3e0d7 " gVim/MacVim
+highlight GitGutterAdd    guifg=#009900 guibg=#2a0d6a ctermfg=2 ctermbg=234
+highlight GitGutterChange guifg=#bbbb00 guibg=#382a37 ctermfg=3 ctermbg=234
+highlight GitGutterDelete guifg=#ff2222 guibg=#3e3969 ctermfg=1 ctermbg=234
 
 """"""""""""""""""""""""""" YouCompleteMe """"""""""""""""""""""""""""
 
@@ -131,6 +137,9 @@ inoremap kk <esc>A<cr>{<cr>}<esc>O
 inoremap kK <esc>A<cr>{<cr>};<esc>O
 inoremap { {}<esc>i
 inoremap {} {}<esc>i
+inoremap <leader>i if ()<esc>i
+inoremap <leader>f for ()<esc>i
+inoremap <leader>w while ()<esc>i
 inoremap <leader>g {}<esc>i
 inoremap <leader>G {};<esc>hi
 inoremap ` ``<esc>i
@@ -153,8 +162,12 @@ inoremap <leader>b ${}<esc>i
 inoremap <leader>n $()<esc>i
 
 " Normal mode keymaps
+nnoremap J <C-F>
+nnoremap K <C-B>
 nnoremap S :w<cr>
+nnoremap <leader>r :YcmRestartServer<cr>
 nnoremap ; :Files<cr>
+nnoremap <leader>. *``
 nnoremap <leader>o :NERDTreeToggle<cr>
 nnoremap <leader><Right> :GitGutterNextHunk<cr>
 nnoremap <leader><Left> :GitGutterPrevHunk<cr>
@@ -216,7 +229,7 @@ nnoremap <leader>v :so $HOME/.vimrc<cr>
 " nnoremap <leader>b :buffers<cr>:buffer
 nnoremap <leader>b :BufstopFast<cr>
 nnoremap <leader>B :bd
-nnoremap <C-o> :call EditOnCurrentDir()<cr>
+nnoremap <leader>e :call EditOnCurrentDir()<cr>
 
 " Visual mode keymaps
 vnoremap <C-C> :call VisualBlockComment()<cr>
