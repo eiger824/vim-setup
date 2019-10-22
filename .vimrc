@@ -87,6 +87,8 @@ set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=manual
 
+set encoding=utf-8
+
 "Source right autocomplete script depending on the language
 let format = split(expand('%:t'), '\.')
 if len(format) > 1
